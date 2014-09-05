@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeminiCPU", "GeminiCPU\GeminiCPU.csproj", "{DC75F3DF-B1E0-4226-AFF2-D4E3A3C5B899}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeminiCore", "GeminiCore\GeminiCore.csproj", "{095F827D-9290-404C-99F1-6B0F8582A82F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC75F3DF-B1E0-4226-AFF2-D4E3A3C5B899}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC75F3DF-B1E0-4226-AFF2-D4E3A3C5B899}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC75F3DF-B1E0-4226-AFF2-D4E3A3C5B899}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC75F3DF-B1E0-4226-AFF2-D4E3A3C5B899}.Release|Any CPU.Build.0 = Release|Any CPU
+		{095F827D-9290-404C-99F1-6B0F8582A82F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{095F827D-9290-404C-99F1-6B0F8582A82F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{095F827D-9290-404C-99F1-6B0F8582A82F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{095F827D-9290-404C-99F1-6B0F8582A82F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
