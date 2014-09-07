@@ -14,7 +14,6 @@ namespace GeminiCore
     {
 
         //TODO list,
-        //write regex patterns
         //catch malformed line exception syntax errors in first pass
         //fix error throwing in resolve labels and setting list item to new string
         //second pass: finish breaking because label does not exist
@@ -35,9 +34,9 @@ namespace GeminiCore
         List<string> instructions = new List<string>();
 
         //regex patterns for labels, instructions in general, and branch instructions
-        private static string labelPattern = @"";
-        private static string instructPattern = @"";
-        private static string branchPattern = @"";
+        private static string labelPattern = @"(([a-zA-Z]*)+:)";
+        private static string instructPattern = @"([A-Z])+([ /w]*)+(([$]+[0-9]*)|([#$]+[0-9]*)|[a-z]*)+([ /w]*)|(!.*)";
+        private static string branchPattern = @"([B]+[A|E|G|L])+([ /w]*)+([a-zA-Z]*)+([ /w]*)|(!.*)";
 
         //Regex objects
         Regex instructRgx = new Regex(instructPattern);
@@ -90,7 +89,7 @@ namespace GeminiCore
                 MatchCollection branchMatch = branchRgx.Matches(instructs.ElementAt(i));
                 string currentIns = instructs.ElementAt(i);
 
-                if (match.Count == 1)
+                if ((match.Count == 1)||(match.Count == 2))
                 {
                     if (labelMatch.Count == 1)
                     {
@@ -103,7 +102,7 @@ namespace GeminiCore
                     {
                         instructs.RemoveAt(i);
                     }
-                    else if (branchMatch.Count == 1)
+                    else if ((branchMatch.Count == 1)||(branchMatch.Count == 2))
                     {
                         toResolve.Add(currentIns, (short)(i));
                     }
