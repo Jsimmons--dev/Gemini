@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace GeminiCore
 {
-    public class Class1
+    class Memory
     {
-
     }
 }
