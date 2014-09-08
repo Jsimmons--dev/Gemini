@@ -7,23 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace GeminiCore
 {
-    class IAE
+   public class IAE
     {
+
+       
 
         //TODO list,
         //catch malformed line exception syntax errors in first pass
         //fix error throwing in resolve labels and setting list item to new string
         //second pass: finish breaking because label does not exist
-        //second pass: finish cases
-        //second pass: OR all values
-        //second pass: write to file
 
         // Dictionary containing instructing string, short binary value pairs
         Dictionary<string, short> instructDic;
-        
+
         // Dictionary containing labels and their line numbers
         Dictionary<string, short> labelDic = new Dictionary<string, short>();
 
@@ -33,10 +33,13 @@ namespace GeminiCore
         //instructions parsed from file
         List<string> instructions = new List<string>();
 
+        //
+        List<short> shorts = new List<short>();
+
         //regex patterns for labels, instructions in general, and branch instructions
         private static string labelPattern = @"(([a-zA-Z]*)+:)";
-        private static string instructPattern = @"([A-Z])+([ /w]*)+(([$]+[0-9]*)|([#$]+[0-9]*)|[a-z]*)+([ /w]*)|(!.*)";
-        private static string branchPattern = @"([B]+[A|E|G|L])+([ /w]*)+([a-zA-Z]*)+([ /w]*)|(!.*)";
+        private static string instructPattern = @"([a-z])+([ /w]*)+(([$]+[0-9]*)|([#$]+[0-9]*)|[a-z]*)+([ /w]*)|(!.*)";
+        private static string branchPattern = @"([b]+[a|e|g|l])+([ /w]*)+([a-zA-Z]*)+([ /w]*)|(!.*)";
 
         //Regex objects
         Regex instructRgx = new Regex(instructPattern);
@@ -46,12 +49,16 @@ namespace GeminiCore
         /// <summary>
         /// performs all the work required to assemble a file into binary
         /// </summary>
-        private void Assemble()
+        public void Assemble(string path)
         {
+            string[] insArray = File.ReadAllLines(path);
+            instructions = insArray.ToList();
             buildInstructDic();
             firstPass(instructions);
             resolveLabels();
             secondPass(instructions);
+            writeShorts(@"C:\Users\joebo_000\Source\Repos\Gemini\GeminiCPU\instructs.bin");
+         
         }
 
         /// <summary>
@@ -89,7 +96,7 @@ namespace GeminiCore
                 MatchCollection branchMatch = branchRgx.Matches(instructs.ElementAt(i));
                 string currentIns = instructs.ElementAt(i);
 
-                if ((match.Count == 1)||(match.Count == 2))
+                if ((match.Count == 1) || (match.Count == 2))
                 {
                     if (labelMatch.Count == 1)
                     {
@@ -102,7 +109,7 @@ namespace GeminiCore
                     {
                         instructs.RemoveAt(i);
                     }
-                    else if ((branchMatch.Count == 1)||(branchMatch.Count == 2))
+                    else if ((branchMatch.Count == 1) || (branchMatch.Count == 2))
                     {
                         toResolve.Add(currentIns, (short)(i));
                     }
@@ -130,9 +137,10 @@ namespace GeminiCore
 
                 }
             }
-            catch (NullReferenceException e)
+            catch (KeyNotFoundException e)
             {
                 //broken syntax
+               // Console.WriteLine("label Not Found");
             }
 
         }
@@ -146,16 +154,63 @@ namespace GeminiCore
                 {
                     string[] pieces = instruction.Split();
                     short op = instructDic[pieces[0]];
+                    //value includes iflag ORed in
                     short value = 0;
                     switch (op)
                     {
                         case 1:
-                           value = immOrMem(pieces[1]);
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 7:
+                        case 8:
+                            value = immOrMem(pieces[1]);
                             break;
+                        case 2:
+                            value = mem(pieces[1]);
+                            break;
+                        case 9:
+                            value = imm(pieces[1]);
+                            break;
+                        case 10:
+                        case 15:
+                        case 16:
+                            break;
+                        case 11:
+                        case 12:
+                        case 13:
+                        case 14:
+                            value = lbl(pieces[1]);
+                            break;
+
+                        default:
+                            break;
+
+                    }
+
+                   short op32 = (short)((int)(op) << 9);
+                   short bits = (short)((int)op32 | (int)value);
+                   shorts.Add(bits);
+                }
+            }
+            catch (KeyNotFoundException e)
+            {
+                //break cause of syntax/no such op
+               // Console.WriteLine("op not found");
+            }
+        }
+
+        private void writeShorts(string name){
+            using (FileStream fs = new FileStream(name, FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                using (BinaryWriter bw = new BinaryWriter(fs))
+                {
+                    foreach (short binshort in shorts)
+                    {
+                        bw.Write(binshort);
                     }
                 }
-            } catch (NullReferenceException e){
-               //break cause of syntax/no such op
             }
         }
 
@@ -166,13 +221,67 @@ namespace GeminiCore
         /// </summary>
         /// <param name="argument"></param>
         /// <returns></returns>
-        private short immOrMem(string argument){
+        private short immOrMem(string argument)
+        {
             short iFlag = 0;
             short value = 0;
-            //TODO parse arg to determine number and if immediate
+            string redo = "";
+            char[] arg = argument.ToCharArray();
+            if(arg[0] == '#'){
+                iFlag = 1;
+                for (int i = 2; i < arg.Length;i++)
+                {
+                    redo += arg[i];
+                }
+            }
+            else
+            {
+                for (int i = 1; i < arg.Length; i++)
+                {
+                    redo += arg[i];
+                }
+            }
+            value = Convert.ToInt16(redo);
+            iFlag = (short)((iFlag) << 8);
             return (short)((int)iFlag | (int)value);
 
-    }
+        }
 
+        private short mem(string argument)
+        {
+            short value = 0;
+            char[] arg = argument.ToCharArray();
+            string redo = "";
+            for (int i = 2; i < arg.Length; i++)
+            {
+                redo += arg[i];
+            }
+            value = Convert.ToInt16(redo);
+            return value;
+        }
+
+        private short imm(string argument)
+        {
+            short iFlag = 1;
+            short value = 0;
+            char[] arg = argument.ToCharArray();
+            string redo = "";
+            for (int i = 2; i < arg.Length; i++)
+            {
+                redo += arg[i];
+            }
+
+            value = Convert.ToInt16(redo);
+            iFlag = (short)((iFlag) << 8);
+            return (short)((int)iFlag | (int)value);
+
+        }
+
+        private short lbl(string argument)
+        {
+            short value = 0;
+            value =  Convert.ToInt16(argument);
+            return value;
+        }
     }
 }
