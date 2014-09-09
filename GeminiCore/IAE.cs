@@ -37,11 +37,15 @@ namespace GeminiCore
         List<short> shorts = new List<short>();
 
         //regex patterns for labels, instructions in general, and branch instructions
+       private static string commentPattern = @"!.*";
         private static string labelPattern = @"(([a-zA-Z]*)+:)";
-        private static string instructPattern = @"([a-z])+([ /w]*)+(([$]+[0-9]*)|([#$]+[0-9]*)|[a-z]*)+([ /w]*)|(!.*)";
-        private static string branchPattern = @"([b]+[a|e|g|l])+([ /w]*)+([a-zA-Z]*)+([ /w]*)|(!.*)";
+        private static string instructPattern = @"([a-z])+([ /w]*)+(([$]+[0-9]*)|([#$]+[0-9]*)|[a-z]*)";
+        private static string branchPattern = @"((bl)|(bg)|(ba)|(be))+([ /w]*)+([a-zA-Z]+)";
+        private static string whitespacePattern = @"";
 
         //Regex objects
+        Regex whitespaceRgx = new Regex(whitespacePattern);
+        Regex commentRgx = new Regex(commentPattern);
         Regex instructRgx = new Regex(instructPattern);
         Regex labelRgx = new Regex(labelPattern);
         Regex branchRgx = new Regex(branchPattern);
@@ -68,22 +72,22 @@ namespace GeminiCore
         private void buildInstructDic()
         {
             instructDic = new Dictionary<string, short>();
-            instructDic.Add("LDA", 1);
-            instructDic.Add("STA", 2);
-            instructDic.Add("ADD", 3);
-            instructDic.Add("SUB", 4);
-            instructDic.Add("MUL", 5);
-            instructDic.Add("DIV", 6);
-            instructDic.Add("AND", 7);
-            instructDic.Add("OR", 8);
-            instructDic.Add("SHL", 9);
-            instructDic.Add("NOTA", 10);
-            instructDic.Add("BA", 11);
-            instructDic.Add("BE", 12);
-            instructDic.Add("BL", 13);
-            instructDic.Add("BG", 14);
-            instructDic.Add("NOP", 15);
-            instructDic.Add("HLT", 16);
+            instructDic.Add("lda", 1);
+            instructDic.Add("sta", 2);
+            instructDic.Add("add", 3);
+            instructDic.Add("sub", 4);
+            instructDic.Add("mul", 5);
+            instructDic.Add("div", 6);
+            instructDic.Add("and", 7);
+            instructDic.Add("or", 8);
+            instructDic.Add("shl", 9);
+            instructDic.Add("nota", 10);
+            instructDic.Add("ba", 11);
+            instructDic.Add("be", 12);
+            instructDic.Add("bl", 13);
+            instructDic.Add("bg", 14);
+            instructDic.Add("nop", 15);
+            instructDic.Add("hlt", 16);
         }
 
 
@@ -91,31 +95,42 @@ namespace GeminiCore
         {
             for (int i = instructions.Count - 1; i >= 0; i--)
             {
-                MatchCollection match = instructRgx.Matches(instructs.ElementAt(i));
-                MatchCollection labelMatch = labelRgx.Matches(instructs.ElementAt(i));
-                MatchCollection branchMatch = branchRgx.Matches(instructs.ElementAt(i));
-                string currentIns = instructs.ElementAt(i);
+                string currentInstruct = instructs.ElementAt(i).Trim();
+                MatchCollection commented = commentRgx.Matches(currentInstruct);
+                if(commented.Count == 1){
+                currentInstruct = parseComment(currentInstruct);
+                instructs[i] = currentInstruct.Trim();
+                }
+                MatchCollection match = instructRgx.Matches(currentInstruct);
+                MatchCollection labelMatch = labelRgx.Matches(currentInstruct);
+                MatchCollection branchMatch = branchRgx.Matches(currentInstruct);
 
-                if ((match.Count == 1) || (match.Count == 2))
+                if ((match.Count == 1)||(match.Count == 2))
                 {
                     if (labelMatch.Count == 1)
                     {
-                        string[] labelName = currentIns.Split();
+                        string[] labelName = currentInstruct.Trim().Split();
                         string label = labelName[0];
                         label = label.TrimEnd(label[label.Length - 1]);
-                        labelDic.Add(label, (short)(i + 1));
-                    }
-                    else if (currentIns == "")
-                    {
+                        labelDic.Add(label, (short)(i + 2));
                         instructs.RemoveAt(i);
                     }
-                    else if ((branchMatch.Count == 1) || (branchMatch.Count == 2))
+                   
+                    else if ((branchMatch.Count == 1))
                     {
-                        toResolve.Add(currentIns, (short)(i));
+                        toResolve.Add(currentInstruct, (short)(i));
                     }
                     else
                     {
-
+                    
+                    }
+                }
+                else
+                {
+                    MatchCollection whitespaceMatch = whitespaceRgx.Matches(whitespacePattern);
+                    if ((currentInstruct == "")||(whitespaceMatch.Count == 1))
+                    {
+                        instructs.RemoveAt(i);
                     }
                 }
             }
@@ -127,7 +142,9 @@ namespace GeminiCore
             {
                 foreach (KeyValuePair<string, short> branch in toResolve)
                 {
-                    short branchValue = labelDic[branch.Key];
+                    string[] instruct = branch.Key.Split();
+                    string labelName = instruct[1];
+                    short branchValue = labelDic[labelName];
                     string instructionToResolve = instructions.ElementAt(branch.Value);
                     string[] pieces = instructionToResolve.Split();
                     pieces[1] = branchValue.ToString();
@@ -152,7 +169,7 @@ namespace GeminiCore
             {
                 foreach (string instruction in instructions)
                 {
-                    string[] pieces = instruction.Split();
+                    string[] pieces = instruction.Trim().Split();
                     short op = instructDic[pieces[0]];
                     //value includes iflag ORed in
                     short value = 0;
@@ -252,7 +269,7 @@ namespace GeminiCore
             short value = 0;
             char[] arg = argument.ToCharArray();
             string redo = "";
-            for (int i = 2; i < arg.Length; i++)
+            for (int i = 1; i < arg.Length; i++)
             {
                 redo += arg[i];
             }
@@ -279,9 +296,13 @@ namespace GeminiCore
 
         private short lbl(string argument)
         {
-            short value = 0;
-            value =  Convert.ToInt16(argument);
-            return value;
+           // short value = 0;
+            //value =  Convert.ToInt16(argument);
+            return labelDic[argument];
         }
-    }
+    
+        public string parseComment(string instruct){
+            return instruct.Substring(0,instruct.IndexOf("!")-1).Trim();
+        }
+   }
 }
