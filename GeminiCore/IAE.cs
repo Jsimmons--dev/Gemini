@@ -103,23 +103,18 @@ namespace GeminiCore
                 }
                 MatchCollection match = instructRgx.Matches(currentInstruct);
                 MatchCollection labelMatch = labelRgx.Matches(currentInstruct);
-                MatchCollection branchMatch = branchRgx.Matches(currentInstruct);
+               
 
                 if ((match.Count == 1)||(match.Count == 2))
                 {
                     if (labelMatch.Count == 1)
                     {
-                        string[] labelName = currentInstruct.Trim().Split();
-                        string label = labelName[0];
-                        label = label.TrimEnd(label[label.Length - 1]);
-                        labelDic.Add(label, (short)(i + 2));
+                        string labelName = currentInstruct.Trim();
+                        labelName = labelName.TrimEnd(labelName[labelName.Length - 1]);
+                        labelDic.Add(labelName, (short)(i + 2));
                         instructs.RemoveAt(i);
                     }
                    
-                    else if ((branchMatch.Count == 1))
-                    {
-                        toResolve.Add(currentInstruct, (short)(i));
-                    }
                     else
                     {
                     
@@ -138,32 +133,12 @@ namespace GeminiCore
 
         private void resolveLabels()
         {
-            try
-            {
-                foreach (KeyValuePair<string, short> branch in toResolve)
-                {
-                    string[] instruct = branch.Key.Split();
-                    string labelName = instruct[1];
-                    short branchValue = labelDic[labelName];
-                    string instructionToResolve = instructions.ElementAt(branch.Value);
-                    string[] pieces = instructionToResolve.Split();
-                    pieces[1] = branchValue.ToString();
-                    instructionToResolve = pieces[0] + pieces[1];
-                    //set instruction to new string
-
-
-                }
-            }
-            catch (KeyNotFoundException e)
-            {
-                //broken syntax
-               // Console.WriteLine("label Not Found");
-            }
+           
 
         }
 
 
-        private void secondPass(List<string> instructs)
+        private void secondPass(List<string> instructions)
         {
             try
             {
@@ -173,6 +148,22 @@ namespace GeminiCore
                     short op = instructDic[pieces[0]];
                     //value includes iflag ORed in
                     short value = 0;
+
+                    MatchCollection branchMatch = branchRgx.Matches(instruction);
+                    if ((branchMatch.Count == 1))
+                    {
+
+                                string instruct = instruction.Trim();
+                                string[] instructPieces = instruct.Split();
+                                string labelName = instructPieces[1].Trim();
+                                short branchValue = labelDic[labelName];
+                                pieces[1] = branchValue.ToString();
+                                value = Convert.ToInt16(pieces[1]);
+
+
+                            }
+                       
+                    
                     switch (op)
                     {
                         case 1:
@@ -198,7 +189,7 @@ namespace GeminiCore
                         case 12:
                         case 13:
                         case 14:
-                            value = lbl(pieces[1]);
+                        
                             break;
 
                         default:
