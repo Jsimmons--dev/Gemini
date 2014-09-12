@@ -3,23 +3,17 @@
  **/
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-using System.IO;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace GeminiCore
 {
    public class IAE
     {
-
-       
-
-        //TODO list,
-        //catch malformed line exception syntax errors in first pass
-        //fix error throwing in resolve labels and setting list item to new string
-        //second pass: finish breaking because label does not exist
 
         // Dictionary containing instructing string, short binary value pairs
         Dictionary<string, short> instructDic;
@@ -33,7 +27,7 @@ namespace GeminiCore
         //instructions parsed from file
         List<string> instructions = new List<string>();
 
-        //
+       //list of shorts: a short is added once the instructions have been translated
         List<short> shorts = new List<short>();
 
         //regex patterns for labels, instructions in general, and branch instructions
@@ -41,7 +35,7 @@ namespace GeminiCore
         private static string labelPattern = @"(([a-zA-Z]*)+:)";
         private static string instructPattern = @"([a-z])+([ /w]*)+(([$]+[0-9]*)|([#$]+[0-9]*)|[a-z]*)";
         private static string branchPattern = @"((bl)|(bg)|(ba)|(be))+([ /w]*)+([a-zA-Z]+)";
-        private static string whitespacePattern = @"";
+        private static string whitespacePattern = @"(^$)|(^\s$)";
 
         //Regex objects
         Regex whitespaceRgx = new Regex(whitespacePattern);
@@ -56,12 +50,13 @@ namespace GeminiCore
         public void Assemble(string path)
         {
             string[] insArray = File.ReadAllLines(path);
-            instructions = insArray.ToList();
+            instructions = insArray.ToList();                              
             buildInstructDic();
+            zerothPass();
             firstPass(instructions);
             resolveLabels();
             secondPass(instructions);
-            writeShorts(@"C:\Users\joebo_000\Source\Repos\Gemini\GeminiCPU\instructs.bin");
+            writeShorts(@"C:\Users\joebo_000\Source\Repos\Gemini\GeminiCPU\instructions.bin");
          
         }
 
@@ -91,42 +86,52 @@ namespace GeminiCore
         }
 
 
+        private void zerothPass()
+        {
+            for (int i = instructions.Count - 1; i >= 0; i--)
+            {
+                MatchCollection whitespaceMatch = whitespaceRgx.Matches(whitespacePattern);
+                if ((instructions[i] == "") || (whitespaceMatch.Count == 1))
+                {
+                    instructions.RemoveAt(i);
+                }
+            }
+        }
+
         private void firstPass(List<string> instructs)
         {
             for (int i = instructions.Count - 1; i >= 0; i--)
             {
                 string currentInstruct = instructs.ElementAt(i).Trim();
+
                 MatchCollection commented = commentRgx.Matches(currentInstruct);
+               
                 if(commented.Count == 1){
                 currentInstruct = parseComment(currentInstruct);
                 instructs[i] = currentInstruct.Trim();
                 }
-                MatchCollection match = instructRgx.Matches(currentInstruct);
-                MatchCollection labelMatch = labelRgx.Matches(currentInstruct);
-               
 
-                if ((match.Count == 1)||(match.Count == 2))
+                MatchCollection InstructionMatch = instructRgx.Matches(currentInstruct);
+                if ((InstructionMatch.Count == 1)||(InstructionMatch.Count == 2))
                 {
+                    MatchCollection labelMatch = labelRgx.Matches(currentInstruct);
+
                     if (labelMatch.Count == 1)
                     {
                         string labelName = currentInstruct.Trim();
                         labelName = labelName.TrimEnd(labelName[labelName.Length - 1]);
-                        labelDic.Add(labelName, (short)(i + 2));
+                        labelDic.Add(labelName, (short)(i + 1));
                         instructs.RemoveAt(i);
                     }
                    
                     else
-                    {
+                    { 
                     
                     }
                 }
                 else
                 {
-                    MatchCollection whitespaceMatch = whitespaceRgx.Matches(whitespacePattern);
-                    if ((currentInstruct == "")||(whitespaceMatch.Count == 1))
-                    {
-                        instructs.RemoveAt(i);
-                    }
+                
                 }
             }
         }
@@ -134,9 +139,7 @@ namespace GeminiCore
         private void resolveLabels()
         {
            
-
         }
-
 
         private void secondPass(List<string> instructions)
         {
@@ -146,7 +149,7 @@ namespace GeminiCore
                 {
                     string[] pieces = instruction.Trim().Split();
                     short op = instructDic[pieces[0]];
-                    //value includes iflag ORed in
+                    //value includes iFlag OR-ed in
                     short value = 0;
 
                     MatchCollection branchMatch = branchRgx.Matches(instruction);
@@ -160,9 +163,7 @@ namespace GeminiCore
                                 pieces[1] = branchValue.ToString();
                                 value = Convert.ToInt16(pieces[1]);
 
-
                             }
-                       
                     
                     switch (op)
                     {
@@ -181,17 +182,6 @@ namespace GeminiCore
                         case 9:
                             value = imm(pieces[1]);
                             break;
-                        case 10:
-                        case 15:
-                        case 16:
-                            break;
-                        case 11:
-                        case 12:
-                        case 13:
-                        case 14:
-                        
-                            break;
-
                         default:
                             break;
 
@@ -204,8 +194,7 @@ namespace GeminiCore
             }
             catch (KeyNotFoundException e)
             {
-                //break cause of syntax/no such op
-               // Console.WriteLine("op not found");
+                MessageBox.Show("Label not found");
             }
         }
 
