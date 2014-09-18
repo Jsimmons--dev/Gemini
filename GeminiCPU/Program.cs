@@ -11,15 +11,26 @@ namespace GeminiCPU
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+
+        public static Window window;
+
         [STAThread]
         static void Main()
         {
-          
-            IAE builder = new IAE();
-            builder.Assemble(@"C:\Users\joebo_000\Source\Repos\Gemini\GeminiCPU\test1.asm");        
+
+            CPU cpu = new CPU();
+            cpu.engine.Assemble();
+            cpu.fillMem();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Window());
+            window = new Window(cpu);
+            window.setUpFirstIns();
+            Application.Run(window);
+
         }
+
+
+     
     }
 }

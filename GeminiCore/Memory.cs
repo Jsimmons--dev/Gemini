@@ -7,12 +7,12 @@ using System.IO;
 
 namespace GeminiCore
 {
-    class Memory
+    public class Memory
     {
-        List<string> instructions;
-        int[] stack;
+        public List<short> instructions;
+        public int[] stack;
 
-        public Memory(string path)
+        public Memory()
         {
             stack = new int[256];
         }

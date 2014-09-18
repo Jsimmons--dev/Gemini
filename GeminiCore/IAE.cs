@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Resources;
 namespace GeminiCore
 {
    public class IAE
@@ -17,6 +17,8 @@ namespace GeminiCore
 
         // Dictionary containing instructing string, short binary value pairs
         Dictionary<string, short> instructDic;
+       //a dictionary that is the reverse of the above dictionary
+        Dictionary<short, string> reverseInsDic;
 
         // Dictionary containing labels and their line numbers
         Dictionary<string, short> labelDic = new Dictionary<string, short>();
@@ -47,16 +49,16 @@ namespace GeminiCore
         /// <summary>
         /// performs all the work required to assemble a file into binary
         /// </summary>
-        public void Assemble(string path)
+        public void Assemble()
         {
-            string[] insArray = File.ReadAllLines(path);
-            instructions = insArray.ToList();                              
+            string[] insArray = File.ReadAllLines(Path.GetFullPath("../../test1.s"));
+            instructions = insArray.ToList();
             buildInstructDic();
             zerothPass();
             firstPass(instructions);
             resolveLabels();
             secondPass(instructions);
-            writeShorts(@"C:\Users\joebo_000\Source\Repos\Gemini\GeminiCPU\instructions.bin");
+            writeShorts();
          
         }
 
@@ -83,6 +85,8 @@ namespace GeminiCore
             instructDic.Add("bg", 14);
             instructDic.Add("nop", 15);
             instructDic.Add("hlt", 16);
+
+            reverseInsDic = instructDic.ToDictionary(x => x.Value, x => x.Key);
         }
 
 
@@ -120,8 +124,12 @@ namespace GeminiCore
                     {
                         string labelName = currentInstruct.Trim();
                         labelName = labelName.TrimEnd(labelName[labelName.Length - 1]);
-                        labelDic.Add(labelName, (short)(i + 1));
+                        labelDic.Add(labelName, (short)((i+2)));
                         instructs.RemoveAt(i);
+                        foreach (string label in labelDic.Keys.ToList())
+                        {
+                            labelDic[label] -= 1;
+                        }
                     }
                    
                     else
@@ -134,6 +142,7 @@ namespace GeminiCore
                 
                 }
             }
+
         }
 
         private void resolveLabels()
@@ -198,17 +207,14 @@ namespace GeminiCore
             }
         }
 
-        private void writeShorts(string name){
-            using (FileStream fs = new FileStream(name, FileMode.OpenOrCreate, FileAccess.Write))
-            {
-                using (BinaryWriter bw = new BinaryWriter(fs))
-                {
-                    foreach (short binshort in shorts)
-                    {
-                        bw.Write(binshort);
-                    }
+        private void writeShorts()
+        {
+            FileStream binFile = File.Create(Path.GetFullPath("../../" + "g.out"));
+            BinaryWriter bw = new BinaryWriter(binFile);
+                foreach(short bin in shorts){
+                    bw.Write(bin);
                 }
-            }
+                bw.Close();
         }
 
         /// <summary>
@@ -284,5 +290,66 @@ namespace GeminiCore
         public string parseComment(string instruct){
             return instruct.Substring(0,instruct.IndexOf("!")-1).Trim();
         }
+
+
+        public string binaryParse(short bin)
+        {
+            int negativeOp = 65024;
+            int negativeIFlag = 256;
+            int negativeValue = 255;
+
+            int op = 0;
+            int iFlag = 0;
+            int value = 0;
+
+            op = (bin & negativeOp) >> 9;
+            iFlag = (bin & negativeIFlag) >> 8;
+            value = (bin & negativeValue);
+            string symbols;
+            switch (op)
+            {
+                case 11:
+                case 12:
+                case 13:
+                case 14:
+                    symbols = "";
+                    break;
+                default:
+                    if(iFlag == 1){
+                        symbols = "#$";
+                    }
+                    else {
+                        symbols = "$";
+                    }
+                    break;
+            }
+            return reverseInsDic[(short)op] + " " + symbols + value.ToString();
+
+            
+        }
+
+       public List<short> readBinFile()
+        {
+           List<short>  ins = new List<short>();
+           FileStream file = File.Open(Path.GetFullPath("../../g.out"), FileMode.Open);
+            using (var reader = new BinaryReader(file))
+            {
+                try
+                {
+                    while (true)
+                    {  
+                        ins.Add(reader.ReadInt16());
+                    }
+                }
+                catch (EndOfStreamException e)
+                {
+                   
+                }
+                return ins;
+            }
+        }
+
+
    }
+
 }

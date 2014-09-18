@@ -42,27 +42,27 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
+            this.aReg = new System.Windows.Forms.Label();
+            this.bReg = new System.Windows.Forms.Label();
+            this.accReg = new System.Windows.Forms.Label();
+            this.zeroReg = new System.Windows.Forms.Label();
+            this.oneReg = new System.Windows.Forms.Label();
+            this.pcReg = new System.Windows.Forms.Label();
+            this.marReg = new System.Windows.Forms.Label();
+            this.mdrReg = new System.Windows.Forms.Label();
+            this.tempReg = new System.Windows.Forms.Label();
+            this.irReg = new System.Windows.Forms.Label();
+            this.ccReg = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
+            this.insIndex = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.nxtInsLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -86,17 +86,17 @@
             this.tableLayoutPanel1.Controls.Add(this.label11, 0, 9);
             this.tableLayoutPanel1.Controls.Add(this.label12, 0, 10);
             this.tableLayoutPanel1.Controls.Add(this.label13, 0, 11);
-            this.tableLayoutPanel1.Controls.Add(this.label14, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label15, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label16, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.label17, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.label18, 1, 5);
-            this.tableLayoutPanel1.Controls.Add(this.label19, 1, 6);
-            this.tableLayoutPanel1.Controls.Add(this.label20, 1, 7);
-            this.tableLayoutPanel1.Controls.Add(this.label21, 1, 8);
-            this.tableLayoutPanel1.Controls.Add(this.label22, 1, 9);
-            this.tableLayoutPanel1.Controls.Add(this.label23, 1, 10);
-            this.tableLayoutPanel1.Controls.Add(this.label24, 1, 11);
+            this.tableLayoutPanel1.Controls.Add(this.aReg, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.bReg, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.accReg, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.zeroReg, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.oneReg, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.pcReg, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.marReg, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.mdrReg, 1, 8);
+            this.tableLayoutPanel1.Controls.Add(this.tempReg, 1, 9);
+            this.tableLayoutPanel1.Controls.Add(this.irReg, 1, 10);
+            this.tableLayoutPanel1.Controls.Add(this.ccReg, 1, 11);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 125);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 12;
@@ -223,95 +223,95 @@
             this.label13.TabIndex = 12;
             this.label13.Text = "CC";
             // 
-            // label14
+            // aReg
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(109, 23);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(40, 13);
-            this.label14.TabIndex = 13;
-            this.label14.Text = "valueA";
+            this.aReg.AutoSize = true;
+            this.aReg.Location = new System.Drawing.Point(109, 23);
+            this.aReg.Name = "aReg";
+            this.aReg.Size = new System.Drawing.Size(28, 13);
+            this.aReg.TabIndex = 13;
+            this.aReg.Text = "0b 0";
             // 
-            // label15
+            // bReg
             // 
-            this.label15.Location = new System.Drawing.Point(109, 46);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(100, 20);
-            this.label15.TabIndex = 14;
-            this.label15.Text = "valueB";
+            this.bReg.Location = new System.Drawing.Point(109, 46);
+            this.bReg.Name = "bReg";
+            this.bReg.Size = new System.Drawing.Size(100, 20);
+            this.bReg.TabIndex = 14;
+            this.bReg.Text = "0b 0";
             // 
-            // label16
+            // accReg
             // 
-            this.label16.Location = new System.Drawing.Point(109, 66);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(100, 20);
-            this.label16.TabIndex = 15;
-            this.label16.Text = "valueACC";
+            this.accReg.Location = new System.Drawing.Point(109, 66);
+            this.accReg.Name = "accReg";
+            this.accReg.Size = new System.Drawing.Size(100, 20);
+            this.accReg.TabIndex = 15;
+            this.accReg.Text = "0b 0";
             // 
-            // label17
+            // zeroReg
             // 
-            this.label17.Location = new System.Drawing.Point(109, 86);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(100, 20);
-            this.label17.TabIndex = 16;
-            this.label17.Text = "valueZERO";
-            this.label17.Click += new System.EventHandler(this.label17_Click);
+            this.zeroReg.Location = new System.Drawing.Point(109, 86);
+            this.zeroReg.Name = "zeroReg";
+            this.zeroReg.Size = new System.Drawing.Size(100, 20);
+            this.zeroReg.TabIndex = 16;
+            this.zeroReg.Text = "0b 0";
+            this.zeroReg.Click += new System.EventHandler(this.label17_Click);
             // 
-            // label18
+            // oneReg
             // 
-            this.label18.Location = new System.Drawing.Point(109, 106);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(100, 20);
-            this.label18.TabIndex = 17;
-            this.label18.Text = "valueONE";
+            this.oneReg.Location = new System.Drawing.Point(109, 106);
+            this.oneReg.Name = "oneReg";
+            this.oneReg.Size = new System.Drawing.Size(100, 20);
+            this.oneReg.TabIndex = 17;
+            this.oneReg.Text = "0b 1";
             // 
-            // label19
+            // pcReg
             // 
-            this.label19.Location = new System.Drawing.Point(109, 126);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(100, 20);
-            this.label19.TabIndex = 18;
-            this.label19.Text = "valuePC";
+            this.pcReg.Location = new System.Drawing.Point(109, 126);
+            this.pcReg.Name = "pcReg";
+            this.pcReg.Size = new System.Drawing.Size(100, 20);
+            this.pcReg.TabIndex = 18;
+            this.pcReg.Text = "0b 0";
             // 
-            // label20
+            // marReg
             // 
-            this.label20.Location = new System.Drawing.Point(109, 146);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(100, 20);
-            this.label20.TabIndex = 19;
-            this.label20.Text = "valueMAR";
+            this.marReg.Location = new System.Drawing.Point(109, 146);
+            this.marReg.Name = "marReg";
+            this.marReg.Size = new System.Drawing.Size(100, 20);
+            this.marReg.TabIndex = 19;
+            this.marReg.Text = "0b 0";
             // 
-            // label21
+            // mdrReg
             // 
-            this.label21.Location = new System.Drawing.Point(109, 166);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(100, 20);
-            this.label21.TabIndex = 20;
-            this.label21.Text = "valueMDR";
+            this.mdrReg.Location = new System.Drawing.Point(109, 166);
+            this.mdrReg.Name = "mdrReg";
+            this.mdrReg.Size = new System.Drawing.Size(100, 20);
+            this.mdrReg.TabIndex = 20;
+            this.mdrReg.Text = "0b 0";
             // 
-            // label22
+            // tempReg
             // 
-            this.label22.Location = new System.Drawing.Point(109, 186);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(100, 20);
-            this.label22.TabIndex = 21;
-            this.label22.Text = "valueTEMP";
+            this.tempReg.Location = new System.Drawing.Point(109, 186);
+            this.tempReg.Name = "tempReg";
+            this.tempReg.Size = new System.Drawing.Size(100, 20);
+            this.tempReg.TabIndex = 21;
+            this.tempReg.Text = "0b 0";
             // 
-            // label23
+            // irReg
             // 
-            this.label23.Location = new System.Drawing.Point(109, 206);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(100, 20);
-            this.label23.TabIndex = 22;
-            this.label23.Text = "valueIR";
+            this.irReg.Location = new System.Drawing.Point(109, 206);
+            this.irReg.Name = "irReg";
+            this.irReg.Size = new System.Drawing.Size(100, 20);
+            this.irReg.TabIndex = 22;
+            this.irReg.Text = "0b 0";
             // 
-            // label24
+            // ccReg
             // 
-            this.label24.Location = new System.Drawing.Point(109, 226);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(100, 20);
-            this.label24.TabIndex = 23;
-            this.label24.Text = "valueCC";
+            this.ccReg.Location = new System.Drawing.Point(109, 226);
+            this.ccReg.Name = "ccReg";
+            this.ccReg.Size = new System.Drawing.Size(100, 20);
+            this.ccReg.TabIndex = 23;
+            this.ccReg.Text = "0b 0";
             // 
             // button1
             // 
@@ -330,6 +330,7 @@
             this.button2.TabIndex = 2;
             this.button2.Text = "Reload";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -339,6 +340,7 @@
             this.button3.TabIndex = 3;
             this.button3.Text = "Reset CPU";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
@@ -368,14 +370,15 @@
             this.label25.TabIndex = 6;
             this.label25.Text = "Instruction Index";
             // 
-            // label26
+            // insIndex
             // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(125, 72);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(21, 13);
-            this.label26.TabIndex = 7;
-            this.label26.Text = "-/0";
+            this.insIndex.AutoSize = true;
+            this.insIndex.Location = new System.Drawing.Point(125, 72);
+            this.insIndex.Name = "insIndex";
+            this.insIndex.Size = new System.Drawing.Size(21, 13);
+            this.insIndex.TabIndex = 7;
+            this.insIndex.Text = "-/0";
+            this.insIndex.Click += new System.EventHandler(this.label26_Click);
             // 
             // label27
             // 
@@ -387,15 +390,6 @@
             this.label27.Text = "Next Intruction";
             this.label27.Click += new System.EventHandler(this.label27_Click);
             // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(125, 89);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(37, 13);
-            this.label28.TabIndex = 9;
-            this.label28.Text = "----------";
-            // 
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(247, 125);
@@ -404,15 +398,25 @@
             this.pictureBox1.TabIndex = 10;
             this.pictureBox1.TabStop = false;
             // 
+            // nxtInsLabel
+            // 
+            this.nxtInsLabel.AutoSize = true;
+            this.nxtInsLabel.Location = new System.Drawing.Point(125, 89);
+            this.nxtInsLabel.Name = "nxtInsLabel";
+            this.nxtInsLabel.Size = new System.Drawing.Size(37, 13);
+            this.nxtInsLabel.TabIndex = 9;
+            this.nxtInsLabel.Text = "----------";
+            this.nxtInsLabel.Click += new System.EventHandler(this.label28_Click);
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(481, 436);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.label28);
+            this.Controls.Add(this.nxtInsLabel);
             this.Controls.Add(this.label27);
-            this.Controls.Add(this.label26);
+            this.Controls.Add(this.insIndex);
             this.Controls.Add(this.label25);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
@@ -446,26 +450,26 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label aReg;
+        private System.Windows.Forms.Label bReg;
+        private System.Windows.Forms.Label accReg;
+        private System.Windows.Forms.Label zeroReg;
+        private System.Windows.Forms.Label oneReg;
+        private System.Windows.Forms.Label pcReg;
+        private System.Windows.Forms.Label marReg;
+        private System.Windows.Forms.Label mdrReg;
+        private System.Windows.Forms.Label tempReg;
+        private System.Windows.Forms.Label irReg;
+        private System.Windows.Forms.Label ccReg;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label insIndex;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label nxtInsLabel;
         private System.Windows.Forms.PictureBox pictureBox1;
 
 
