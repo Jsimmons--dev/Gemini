@@ -38,7 +38,7 @@ namespace GeminiCore
         }
 
         public void decode(short bin){
-              int negativeOp = 65024;
+            int negativeOp = 65024;
             int negativeIFlag = 256;
             int negativeValue = 255;
 
@@ -108,13 +108,13 @@ namespace GeminiCore
                     }
                     else
                     {
-                        registerACC = (short)((int)registerACC & (int)memory.stack[value]);  //mem
+                        registerACC = (short)(registerACC & memory.stack[value]);  //mem
                     }
                     break;
                 case 8: //OR
                     if (iFlag == 1)
                     {
-                        registerACC = (short)((int)registerACC | (int)value); //imm
+                        registerACC = (short)(registerACC | value); //imm
                     }
                     else
                     {
@@ -122,22 +122,22 @@ namespace GeminiCore
                     }
                     break;
                 case 9: //SHL
-                    registerACC = (short)((int)registerACC << value);
+                    registerACC = (short)(registerACC << value);
                     break;
                 case 10: //NOTA
-                    registerACC = (short)(~(int)registerACC);
+                    registerACC = (short)~registerACC;
                     break;
                 case 11: //BA
-                    registerPC = (short)value;
+                    registerPC = (short)(value-2);
                     break;
                 case 12: //BE
-                    if (registerACC == 0) { registerPC = (short)value; }
+                    if (registerACC == 0) { registerPC = (short)(value-2); }
                     break;
                 case 13: //BL
-                    if (registerACC < 0) { registerPC = (short)value; }
+                    if (registerACC < 0) { registerPC = (short)(value-2); }
                     break;
                 case 14: //BG
-                    if (registerACC > 0) { registerPC = (short)value; }
+                    if (registerACC > 0) { registerPC = (short)(value-2); }
                     break;
                 case 15: //NOP
                     registerACC += 0;

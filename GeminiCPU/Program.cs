@@ -17,15 +17,12 @@ namespace GeminiCPU
         [STAThread]
         static void Main()
         {
-
             CPU cpu = new CPU();
-            cpu.engine.Assemble();
-            cpu.fillMem();
+            
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             window = new Window(cpu);
-            window.setUpFirstIns();
             Application.Run(window);
 
         }

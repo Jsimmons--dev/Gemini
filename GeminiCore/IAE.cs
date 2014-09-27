@@ -15,6 +15,8 @@ namespace GeminiCore
    public class IAE
     {
 
+       int MEM_SIZE = 255;
+
         // Dictionary containing instructing string, short binary value pairs
         Dictionary<string, short> instructDic;
        //a dictionary that is the reverse of the above dictionary
@@ -22,6 +24,11 @@ namespace GeminiCore
 
         // Dictionary containing labels and their line numbers
         Dictionary<string, short> labelDic = new Dictionary<string, short>();
+
+        public void resetLabelDic()
+        {
+            labelDic = new Dictionary<string, short>();
+        }
 
         // Dictionary of branch instructions to be resolved to line numbers
         Dictionary<string, short> toResolve = new Dictionary<string, short>();
@@ -32,12 +39,15 @@ namespace GeminiCore
        //list of shorts: a short is added once the instructions have been translated
         List<short> shorts = new List<short>();
 
+       //path of file to open
+        public string path;
+
         //regex patterns for labels, instructions in general, and branch instructions
        private static string commentPattern = @"!.*";
         private static string labelPattern = @"(([a-zA-Z]*)+:)";
         private static string instructPattern = @"([a-z])+([ /w]*)+(([$]+[0-9]*)|([#$]+[0-9]*)|[a-z]*)";
         private static string branchPattern = @"((bl)|(bg)|(ba)|(be))+([ /w]*)+([a-zA-Z]+)";
-        private static string whitespacePattern = @"(^$)|(^\s$)";
+        private static string whitespacePattern = @"\s*|\t*";
 
         //Regex objects
         Regex whitespaceRgx = new Regex(whitespacePattern);
@@ -49,9 +59,9 @@ namespace GeminiCore
         /// <summary>
         /// performs all the work required to assemble a file into binary
         /// </summary>
-        public void Assemble()
+        public void Assemble(string path)
         {
-            string[] insArray = File.ReadAllLines(Path.GetFullPath("../../test1.s"));
+            string[] insArray = File.ReadAllLines(Path.GetFullPath(path));
             instructions = insArray.ToList();
             buildInstructDic();
             zerothPass();
@@ -59,7 +69,6 @@ namespace GeminiCore
             resolveLabels();
             secondPass(instructions);
             writeShorts();
-         
         }
 
         /// <summary>
@@ -92,14 +101,15 @@ namespace GeminiCore
 
         private void zerothPass()
         {
-            for (int i = instructions.Count - 1; i >= 0; i--)
-            {
-                MatchCollection whitespaceMatch = whitespaceRgx.Matches(whitespacePattern);
-                if ((instructions[i] == "") || (whitespaceMatch.Count == 1))
+                for (int i = instructions.Count - 1; i >= 0; i--)
                 {
-                    instructions.RemoveAt(i);
+                    MatchCollection whitespaceMatch = whitespaceRgx.Matches(whitespacePattern);
+                    instructions[i] = Regex.Replace(instructions[i],@"\s+"," ");
+                    if ((instructions[i] == "") || (instructions[i] == " ") ||(whitespaceMatch.Count == 1))
+                    {
+                        instructions.RemoveAt(i);
+                    }
                 }
-            }
         }
 
         private void firstPass(List<string> instructs)
@@ -110,11 +120,16 @@ namespace GeminiCore
 
                 MatchCollection commented = commentRgx.Matches(currentInstruct);
                
+                //checks if instruction has a comment
                 if(commented.Count == 1){
                 currentInstruct = parseComment(currentInstruct);
                 instructs[i] = currentInstruct.Trim();
+                string[] split = instructs[i].Split(null);
+                if (split.Count() > 3)
+                {
+                    throw new SyntaxException();
                 }
-
+                }
                 MatchCollection InstructionMatch = instructRgx.Matches(currentInstruct);
                 if ((InstructionMatch.Count == 1)||(InstructionMatch.Count == 2))
                 {
@@ -162,6 +177,7 @@ namespace GeminiCore
                     short value = 0;
 
                     MatchCollection branchMatch = branchRgx.Matches(instruction);
+                    //resolves branches
                     if ((branchMatch.Count == 1))
                     {
 
@@ -203,7 +219,7 @@ namespace GeminiCore
             }
             catch (KeyNotFoundException e)
             {
-                MessageBox.Show("Label not found");
+                MessageBox.Show("Key Not Found Error");
             }
         }
 
@@ -260,6 +276,9 @@ namespace GeminiCore
                 redo += arg[i];
             }
             value = Convert.ToInt16(redo);
+            if(value > MEM_SIZE){
+                throw new SegFaultException();
+            }
             return value;
         }
 
@@ -324,8 +343,6 @@ namespace GeminiCore
                     break;
             }
             return reverseInsDic[(short)op] + " " + symbols + value.ToString();
-
-            
         }
 
        public List<short> readBinFile()
@@ -348,8 +365,5 @@ namespace GeminiCore
                 return ins;
             }
         }
-
-
    }
-
 }

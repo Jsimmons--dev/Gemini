@@ -10,6 +10,12 @@ namespace GeminiCore
     public class Memory
     {
         public List<short> instructions;
+
+        public void resetInstructions()
+        {
+            instructions = new List<short>();
+        }
+
         public int[] stack;
 
         public Memory()

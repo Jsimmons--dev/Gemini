@@ -44,6 +44,8 @@
     <Compile Include="IAE.cs" />
     <Compile Include="Memory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SegFaultException.cs" />
+    <Compile Include="SyntaxException.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\test1.s" />

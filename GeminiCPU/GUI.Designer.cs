@@ -54,8 +54,7 @@
             this.irReg = new System.Windows.Forms.Label();
             this.ccReg = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.resetCPU = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.label25 = new System.Windows.Forms.Label();
@@ -112,7 +111,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(212, 246);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(533, 246);
             this.tableLayoutPanel1.TabIndex = 0;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
@@ -128,7 +127,7 @@
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(109, 0);
+            this.label2.Location = new System.Drawing.Point(269, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(100, 23);
             this.label2.TabIndex = 1;
@@ -226,7 +225,7 @@
             // aReg
             // 
             this.aReg.AutoSize = true;
-            this.aReg.Location = new System.Drawing.Point(109, 23);
+            this.aReg.Location = new System.Drawing.Point(269, 23);
             this.aReg.Name = "aReg";
             this.aReg.Size = new System.Drawing.Size(28, 13);
             this.aReg.TabIndex = 13;
@@ -234,7 +233,7 @@
             // 
             // bReg
             // 
-            this.bReg.Location = new System.Drawing.Point(109, 46);
+            this.bReg.Location = new System.Drawing.Point(269, 46);
             this.bReg.Name = "bReg";
             this.bReg.Size = new System.Drawing.Size(100, 20);
             this.bReg.TabIndex = 14;
@@ -242,15 +241,15 @@
             // 
             // accReg
             // 
-            this.accReg.Location = new System.Drawing.Point(109, 66);
+            this.accReg.Location = new System.Drawing.Point(269, 66);
             this.accReg.Name = "accReg";
-            this.accReg.Size = new System.Drawing.Size(100, 20);
+            this.accReg.Size = new System.Drawing.Size(120, 20);
             this.accReg.TabIndex = 15;
             this.accReg.Text = "0b 0";
             // 
             // zeroReg
             // 
-            this.zeroReg.Location = new System.Drawing.Point(109, 86);
+            this.zeroReg.Location = new System.Drawing.Point(269, 86);
             this.zeroReg.Name = "zeroReg";
             this.zeroReg.Size = new System.Drawing.Size(100, 20);
             this.zeroReg.TabIndex = 16;
@@ -259,7 +258,7 @@
             // 
             // oneReg
             // 
-            this.oneReg.Location = new System.Drawing.Point(109, 106);
+            this.oneReg.Location = new System.Drawing.Point(269, 106);
             this.oneReg.Name = "oneReg";
             this.oneReg.Size = new System.Drawing.Size(100, 20);
             this.oneReg.TabIndex = 17;
@@ -267,7 +266,7 @@
             // 
             // pcReg
             // 
-            this.pcReg.Location = new System.Drawing.Point(109, 126);
+            this.pcReg.Location = new System.Drawing.Point(269, 126);
             this.pcReg.Name = "pcReg";
             this.pcReg.Size = new System.Drawing.Size(100, 20);
             this.pcReg.TabIndex = 18;
@@ -275,7 +274,7 @@
             // 
             // marReg
             // 
-            this.marReg.Location = new System.Drawing.Point(109, 146);
+            this.marReg.Location = new System.Drawing.Point(269, 146);
             this.marReg.Name = "marReg";
             this.marReg.Size = new System.Drawing.Size(100, 20);
             this.marReg.TabIndex = 19;
@@ -283,7 +282,7 @@
             // 
             // mdrReg
             // 
-            this.mdrReg.Location = new System.Drawing.Point(109, 166);
+            this.mdrReg.Location = new System.Drawing.Point(269, 166);
             this.mdrReg.Name = "mdrReg";
             this.mdrReg.Size = new System.Drawing.Size(100, 20);
             this.mdrReg.TabIndex = 20;
@@ -291,7 +290,7 @@
             // 
             // tempReg
             // 
-            this.tempReg.Location = new System.Drawing.Point(109, 186);
+            this.tempReg.Location = new System.Drawing.Point(269, 186);
             this.tempReg.Name = "tempReg";
             this.tempReg.Size = new System.Drawing.Size(100, 20);
             this.tempReg.TabIndex = 21;
@@ -299,7 +298,7 @@
             // 
             // irReg
             // 
-            this.irReg.Location = new System.Drawing.Point(109, 206);
+            this.irReg.Location = new System.Drawing.Point(269, 206);
             this.irReg.Name = "irReg";
             this.irReg.Size = new System.Drawing.Size(100, 20);
             this.irReg.TabIndex = 22;
@@ -307,7 +306,7 @@
             // 
             // ccReg
             // 
-            this.ccReg.Location = new System.Drawing.Point(109, 226);
+            this.ccReg.Location = new System.Drawing.Point(269, 226);
             this.ccReg.Name = "ccReg";
             this.ccReg.Size = new System.Drawing.Size(100, 20);
             this.ccReg.TabIndex = 23;
@@ -315,32 +314,23 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(196, 12);
+            this.button1.Location = new System.Drawing.Point(247, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
             this.button1.Text = "Load File";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // resetCPU
             // 
-            this.button2.Location = new System.Drawing.Point(277, 12);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Reload";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(358, 12);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "Reset CPU";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.resetCPU.Location = new System.Drawing.Point(364, 12);
+            this.resetCPU.Name = "resetCPU";
+            this.resetCPU.Size = new System.Drawing.Size(75, 23);
+            this.resetCPU.TabIndex = 3;
+            this.resetCPU.Text = "Reset CPU";
+            this.resetCPU.UseVisualStyleBackColor = true;
+            this.resetCPU.Click += new System.EventHandler(this.resetButton_Click);
             // 
             // button4
             // 
@@ -360,6 +350,7 @@
             this.button5.TabIndex = 5;
             this.button5.Text = "Run to End";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // label25
             // 
@@ -392,9 +383,11 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(247, 125);
+            this.pictureBox1.Image = global::GeminiCPU.Properties.Resources.chubby;
+            this.pictureBox1.Location = new System.Drawing.Point(488, 89);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(222, 226);
+            this.pictureBox1.Size = new System.Drawing.Size(192, 299);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 10;
             this.pictureBox1.TabStop = false;
             // 
@@ -412,7 +405,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(481, 436);
+            this.ClientSize = new System.Drawing.Size(691, 436);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.nxtInsLabel);
             this.Controls.Add(this.label27);
@@ -420,8 +413,7 @@
             this.Controls.Add(this.label25);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.resetCPU);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Window";
@@ -462,8 +454,7 @@
         private System.Windows.Forms.Label irReg;
         private System.Windows.Forms.Label ccReg;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button resetCPU;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Label label25;
