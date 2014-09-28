@@ -74,6 +74,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="test1.out" />
+    <None Include="test3.out" />
+    <None Include="test5.out" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -86,6 +89,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\chubby.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="test1.s" />
+    <Content Include="test2.s" />
+    <Content Include="test3.s" />
+    <Content Include="test4.s" />
+    <Content Include="test5.s" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
