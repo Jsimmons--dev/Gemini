@@ -87,21 +87,21 @@ namespace GeminiCore
                     break;
                 case 5: //MUL
                     if(iFlag == 1){
-                        //imm
+                        registerACC *= (short)value; //imm
                     }
                     else
                     {
-                        //mem
+                        registerACC *= (short)memory.stack[value]; //mem
                     }
                     break;
                 case 6: //DIV
                     if (iFlag == 1)
                     {
-                        //imm
+                        registerACC /= (short)value;//imm
                     }
                     else
                     {
-                        //mem
+                        registerACC /= (short)memory.stack[value];//mem
                     }
                     break;
                 case 7: //AND
