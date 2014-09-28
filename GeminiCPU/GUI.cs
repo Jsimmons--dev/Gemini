@@ -310,7 +310,7 @@ namespace GeminiCPU
                 cpu.engine.path = ofd.FileName;
                 try
                 {
-                    cpu.engine.Assemble(cpu.engine.path);
+                    cpu.engine.Assemble(cpu.engine.path,"g.out");
                     cpu.fillMem();
                     setUpFirstIns();
                 }

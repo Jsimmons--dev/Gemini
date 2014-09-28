@@ -59,7 +59,7 @@ namespace GeminiCore
         /// <summary>
         /// performs all the work required to assemble a file into binary
         /// </summary>
-        public void Assemble(string path)
+        public void Assemble(string path,string filename)
         {
             string[] insArray = File.ReadAllLines(Path.GetFullPath(path));
             instructions = insArray.ToList();
@@ -68,7 +68,7 @@ namespace GeminiCore
             firstPass(instructions);
             resolveLabels();
             secondPass(instructions);
-            writeShorts();
+            writeShorts(filename);
         }
 
         /// <summary>
@@ -223,9 +223,9 @@ namespace GeminiCore
             }
         }
 
-        private void writeShorts()
+        private void writeShorts(string newASMFile)
         {
-            FileStream binFile = File.Create(Path.GetFullPath("../../" + "g.out"));
+            FileStream binFile = File.Create(Path.GetFullPath("../../" + newASMFile));
             BinaryWriter bw = new BinaryWriter(binFile);
                 foreach(short bin in shorts){
                     bw.Write(bin);
