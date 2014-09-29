@@ -1,4 +1,0 @@
-Gemini
-======
-
-Gemini CPU simulator

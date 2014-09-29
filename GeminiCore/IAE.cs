@@ -1,6 +1,6 @@
-﻿/**
- * Josh Simmons and Shane Hayfcz
- **/
+﻿/*
+ Joshua Simmons and Shane Hayfcz
+*/
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -72,7 +72,7 @@ namespace GeminiCore
         }
 
         /// <summary>
-        /// builds the instruction dictionary where the key is the name and the value is the 
+        /// builds the instruction dictionary where the key is the name and the value is the
         /// short representing its bit representation
         /// </summary>
         private void buildInstructDic()
@@ -119,7 +119,7 @@ namespace GeminiCore
                 string currentInstruct = instructs.ElementAt(i).Trim();
 
                 MatchCollection commented = commentRgx.Matches(currentInstruct);
-               
+
                 //checks if instruction has a comment
                 if(commented.Count == 1){
                 currentInstruct = parseComment(currentInstruct);
@@ -146,15 +146,15 @@ namespace GeminiCore
                             labelDic[label] -= 1;
                         }
                     }
-                   
+
                     else
-                    { 
-                    
+                    {
+
                     }
                 }
                 else
                 {
-                
+
                 }
             }
 
@@ -162,7 +162,7 @@ namespace GeminiCore
 
         private void resolveLabels()
         {
-           
+
         }
 
         private void secondPass(List<string> instructions)
@@ -189,7 +189,7 @@ namespace GeminiCore
                                 value = Convert.ToInt16(pieces[1]);
 
                             }
-                    
+
                     switch (op)
                     {
                         case 1:
@@ -235,7 +235,7 @@ namespace GeminiCore
 
         /// <summary>
         /// takes a string and determines if it is an immediate or a memory address,
-        /// if immediate set iFlag, 
+        /// if immediate set iFlag,
         /// then set value to number after #$ or $
         /// </summary>
         /// <param name="argument"></param>
@@ -305,7 +305,7 @@ namespace GeminiCore
             //value =  Convert.ToInt16(argument);
             return labelDic[argument];
         }
-    
+
         public string parseComment(string instruct){
             return instruct.Substring(0,instruct.IndexOf("!")-1).Trim();
         }
@@ -354,13 +354,13 @@ namespace GeminiCore
                 try
                 {
                     while (true)
-                    {  
+                    {
                         ins.Add(reader.ReadInt16());
                     }
                 }
                 catch (EndOfStreamException e)
                 {
-                   
+
                 }
                 return ins;
             }

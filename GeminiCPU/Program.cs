@@ -1,3 +1,6 @@
+/*
+Joshua Simmons and Shane Hafycz
+*/
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +37,6 @@ namespace GeminiCPU
         }
 
 
-     
+
     }
 }

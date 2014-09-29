@@ -1,3 +1,6 @@
+/*
+Joshua Simmons and Shane Hafycz
+*/
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +16,7 @@ namespace GeminiCPU
 {
     public partial class Window : Form
     {
-        
+
         public Window(CPU cpu)
         {
             InitializeComponent();
@@ -164,7 +167,7 @@ namespace GeminiCPU
             set
             {
                 this.insIndex.Text = value;
-            } 
+            }
         }
 
 
@@ -246,7 +249,7 @@ namespace GeminiCPU
             nxtIns = cpu.engine.binaryParse(cpu.currentIns);
             updateIndex();
             }
-            
+
         }
 
         private void label26_Click(object sender, EventArgs e)
