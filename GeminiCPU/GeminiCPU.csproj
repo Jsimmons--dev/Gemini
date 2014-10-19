@@ -91,11 +91,18 @@
     <None Include="Resources\chubby.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="cacheTest1.s" />
+    <Content Include="project2_test1.s" />
+    <Content Include="project2_test2.s" />
     <Content Include="test1.s" />
     <Content Include="test2.s" />
     <Content Include="test3.s" />
     <Content Include="test4.s" />
     <Content Include="test5.s" />
+    <Content Include="testArgMismatch.s" />
+    <Content Include="testInvalidArgFormatting.s" />
+    <Content Include="testInvalidCommand.s" />
+    <Content Include="testUndefinedLabel.s" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

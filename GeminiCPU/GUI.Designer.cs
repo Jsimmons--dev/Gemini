@@ -62,8 +62,29 @@
             this.label27 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.nxtInsLabel = new System.Windows.Forms.Label();
+            this.ReadHitLabel = new System.Windows.Forms.Label();
+            this.ReadHitValue = new System.Windows.Forms.Label();
+            this.ReadMissLabel = new System.Windows.Forms.Label();
+            this.ReadMissValue = new System.Windows.Forms.Label();
+            this.WriteHitLabel = new System.Windows.Forms.Label();
+            this.WriteHitValue = new System.Windows.Forms.Label();
+            this.WriteMissLabel = new System.Windows.Forms.Label();
+            this.WriteMissValue = new System.Windows.Forms.Label();
+            this.cacheViewText = new System.Windows.Forms.Label();
+            this.cacheViewLabel = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.directButton = new System.Windows.Forms.RadioButton();
+            this.twoWayMap = new System.Windows.Forms.RadioButton();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.blockSizeOne = new System.Windows.Forms.RadioButton();
+            this.wordSizeTwo = new System.Windows.Forms.RadioButton();
+            this.CacheSizeTrack = new System.Windows.Forms.TrackBar();
+            this.cacheSizeLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CacheSizeTrack)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -111,7 +132,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(533, 246);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(470, 246);
             this.tableLayoutPanel1.TabIndex = 0;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
@@ -127,7 +148,7 @@
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(269, 0);
+            this.label2.Location = new System.Drawing.Point(238, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(100, 23);
             this.label2.TabIndex = 1;
@@ -225,7 +246,7 @@
             // aReg
             // 
             this.aReg.AutoSize = true;
-            this.aReg.Location = new System.Drawing.Point(269, 23);
+            this.aReg.Location = new System.Drawing.Point(238, 23);
             this.aReg.Name = "aReg";
             this.aReg.Size = new System.Drawing.Size(28, 13);
             this.aReg.TabIndex = 13;
@@ -233,7 +254,7 @@
             // 
             // bReg
             // 
-            this.bReg.Location = new System.Drawing.Point(269, 46);
+            this.bReg.Location = new System.Drawing.Point(238, 46);
             this.bReg.Name = "bReg";
             this.bReg.Size = new System.Drawing.Size(100, 20);
             this.bReg.TabIndex = 14;
@@ -241,7 +262,7 @@
             // 
             // accReg
             // 
-            this.accReg.Location = new System.Drawing.Point(269, 66);
+            this.accReg.Location = new System.Drawing.Point(238, 66);
             this.accReg.Name = "accReg";
             this.accReg.Size = new System.Drawing.Size(120, 20);
             this.accReg.TabIndex = 15;
@@ -249,7 +270,7 @@
             // 
             // zeroReg
             // 
-            this.zeroReg.Location = new System.Drawing.Point(269, 86);
+            this.zeroReg.Location = new System.Drawing.Point(238, 86);
             this.zeroReg.Name = "zeroReg";
             this.zeroReg.Size = new System.Drawing.Size(100, 20);
             this.zeroReg.TabIndex = 16;
@@ -258,7 +279,7 @@
             // 
             // oneReg
             // 
-            this.oneReg.Location = new System.Drawing.Point(269, 106);
+            this.oneReg.Location = new System.Drawing.Point(238, 106);
             this.oneReg.Name = "oneReg";
             this.oneReg.Size = new System.Drawing.Size(100, 20);
             this.oneReg.TabIndex = 17;
@@ -266,7 +287,7 @@
             // 
             // pcReg
             // 
-            this.pcReg.Location = new System.Drawing.Point(269, 126);
+            this.pcReg.Location = new System.Drawing.Point(238, 126);
             this.pcReg.Name = "pcReg";
             this.pcReg.Size = new System.Drawing.Size(100, 20);
             this.pcReg.TabIndex = 18;
@@ -274,7 +295,7 @@
             // 
             // marReg
             // 
-            this.marReg.Location = new System.Drawing.Point(269, 146);
+            this.marReg.Location = new System.Drawing.Point(238, 146);
             this.marReg.Name = "marReg";
             this.marReg.Size = new System.Drawing.Size(100, 20);
             this.marReg.TabIndex = 19;
@@ -282,7 +303,7 @@
             // 
             // mdrReg
             // 
-            this.mdrReg.Location = new System.Drawing.Point(269, 166);
+            this.mdrReg.Location = new System.Drawing.Point(238, 166);
             this.mdrReg.Name = "mdrReg";
             this.mdrReg.Size = new System.Drawing.Size(100, 20);
             this.mdrReg.TabIndex = 20;
@@ -290,7 +311,7 @@
             // 
             // tempReg
             // 
-            this.tempReg.Location = new System.Drawing.Point(269, 186);
+            this.tempReg.Location = new System.Drawing.Point(238, 186);
             this.tempReg.Name = "tempReg";
             this.tempReg.Size = new System.Drawing.Size(100, 20);
             this.tempReg.TabIndex = 21;
@@ -298,7 +319,7 @@
             // 
             // irReg
             // 
-            this.irReg.Location = new System.Drawing.Point(269, 206);
+            this.irReg.Location = new System.Drawing.Point(238, 206);
             this.irReg.Name = "irReg";
             this.irReg.Size = new System.Drawing.Size(100, 20);
             this.irReg.TabIndex = 22;
@@ -306,7 +327,7 @@
             // 
             // ccReg
             // 
-            this.ccReg.Location = new System.Drawing.Point(269, 226);
+            this.ccReg.Location = new System.Drawing.Point(238, 226);
             this.ccReg.Name = "ccReg";
             this.ccReg.Size = new System.Drawing.Size(100, 20);
             this.ccReg.TabIndex = 23;
@@ -340,7 +361,7 @@
             this.button4.TabIndex = 4;
             this.button4.Text = "Next Instruction";
             this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.button4.Click += new System.EventHandler(this.nextButton_Click);
             // 
             // button5
             // 
@@ -401,11 +422,205 @@
             this.nxtInsLabel.Text = "----------";
             this.nxtInsLabel.Click += new System.EventHandler(this.label28_Click);
             // 
+            // ReadHitLabel
+            // 
+            this.ReadHitLabel.AutoSize = true;
+            this.ReadHitLabel.Location = new System.Drawing.Point(485, 20);
+            this.ReadHitLabel.Name = "ReadHitLabel";
+            this.ReadHitLabel.Size = new System.Drawing.Size(46, 13);
+            this.ReadHitLabel.TabIndex = 12;
+            this.ReadHitLabel.Text = "ReadHit";
+            // 
+            // ReadHitValue
+            // 
+            this.ReadHitValue.AutoSize = true;
+            this.ReadHitValue.Location = new System.Drawing.Point(536, 20);
+            this.ReadHitValue.Name = "ReadHitValue";
+            this.ReadHitValue.Size = new System.Drawing.Size(33, 13);
+            this.ReadHitValue.TabIndex = 13;
+            this.ReadHitValue.Text = "value";
+            // 
+            // ReadMissLabel
+            // 
+            this.ReadMissLabel.AutoSize = true;
+            this.ReadMissLabel.Location = new System.Drawing.Point(485, 37);
+            this.ReadMissLabel.Name = "ReadMissLabel";
+            this.ReadMissLabel.Size = new System.Drawing.Size(54, 13);
+            this.ReadMissLabel.TabIndex = 14;
+            this.ReadMissLabel.Text = "ReadMiss";
+            // 
+            // ReadMissValue
+            // 
+            this.ReadMissValue.AutoSize = true;
+            this.ReadMissValue.Location = new System.Drawing.Point(539, 37);
+            this.ReadMissValue.Name = "ReadMissValue";
+            this.ReadMissValue.Size = new System.Drawing.Size(33, 13);
+            this.ReadMissValue.TabIndex = 15;
+            this.ReadMissValue.Text = "value";
+            // 
+            // WriteHitLabel
+            // 
+            this.WriteHitLabel.AutoSize = true;
+            this.WriteHitLabel.Location = new System.Drawing.Point(485, 53);
+            this.WriteHitLabel.Name = "WriteHitLabel";
+            this.WriteHitLabel.Size = new System.Drawing.Size(45, 13);
+            this.WriteHitLabel.TabIndex = 16;
+            this.WriteHitLabel.Text = "WriteHit";
+            this.WriteHitLabel.Click += new System.EventHandler(this.label18_Click);
+            // 
+            // WriteHitValue
+            // 
+            this.WriteHitValue.AutoSize = true;
+            this.WriteHitValue.Location = new System.Drawing.Point(539, 53);
+            this.WriteHitValue.Name = "WriteHitValue";
+            this.WriteHitValue.Size = new System.Drawing.Size(33, 13);
+            this.WriteHitValue.TabIndex = 17;
+            this.WriteHitValue.Text = "value";
+            // 
+            // WriteMissLabel
+            // 
+            this.WriteMissLabel.AutoSize = true;
+            this.WriteMissLabel.Location = new System.Drawing.Point(485, 72);
+            this.WriteMissLabel.Name = "WriteMissLabel";
+            this.WriteMissLabel.Size = new System.Drawing.Size(53, 13);
+            this.WriteMissLabel.TabIndex = 18;
+            this.WriteMissLabel.Text = "WriteMiss";
+            // 
+            // WriteMissValue
+            // 
+            this.WriteMissValue.AutoSize = true;
+            this.WriteMissValue.Location = new System.Drawing.Point(539, 70);
+            this.WriteMissValue.Name = "WriteMissValue";
+            this.WriteMissValue.Size = new System.Drawing.Size(33, 13);
+            this.WriteMissValue.TabIndex = 19;
+            this.WriteMissValue.Text = "value";
+            // 
+            // cacheViewText
+            // 
+            this.cacheViewText.AutoSize = true;
+            this.cacheViewText.Location = new System.Drawing.Point(742, 22);
+            this.cacheViewText.Name = "cacheViewText";
+            this.cacheViewText.Size = new System.Drawing.Size(37, 13);
+            this.cacheViewText.TabIndex = 20;
+            this.cacheViewText.Text = "cache";
+            // 
+            // cacheViewLabel
+            // 
+            this.cacheViewLabel.AutoSize = true;
+            this.cacheViewLabel.Location = new System.Drawing.Point(745, 39);
+            this.cacheViewLabel.Name = "cacheViewLabel";
+            this.cacheViewLabel.Size = new System.Drawing.Size(13, 13);
+            this.cacheViewLabel.TabIndex = 21;
+            this.cacheViewLabel.Text = "0";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.twoWayMap);
+            this.panel1.Controls.Add(this.directButton);
+            this.panel1.Location = new System.Drawing.Point(893, 297);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(147, 40);
+            this.panel1.TabIndex = 22;
+            // 
+            // directButton
+            // 
+            this.directButton.AutoSize = true;
+            this.directButton.Checked = true;
+            this.directButton.Location = new System.Drawing.Point(0, 0);
+            this.directButton.Name = "directButton";
+            this.directButton.Size = new System.Drawing.Size(132, 17);
+            this.directButton.TabIndex = 0;
+            this.directButton.TabStop = true;
+            this.directButton.Text = "1-Way Set Associative";
+            this.directButton.UseVisualStyleBackColor = true;
+            this.directButton.CheckedChanged += new System.EventHandler(this.directButton_CheckedChanged);
+            // 
+            // twoWayMap
+            // 
+            this.twoWayMap.AutoSize = true;
+            this.twoWayMap.Location = new System.Drawing.Point(0, 23);
+            this.twoWayMap.Name = "twoWayMap";
+            this.twoWayMap.Size = new System.Drawing.Size(132, 17);
+            this.twoWayMap.TabIndex = 1;
+            this.twoWayMap.TabStop = true;
+            this.twoWayMap.Text = "2-Way Set Associative";
+            this.twoWayMap.UseVisualStyleBackColor = true;
+            this.twoWayMap.CheckedChanged += new System.EventHandler(this.twoWayMap_CheckedChanged);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.wordSizeTwo);
+            this.panel2.Controls.Add(this.blockSizeOne);
+            this.panel2.Location = new System.Drawing.Point(893, 251);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(150, 40);
+            this.panel2.TabIndex = 23;
+            // 
+            // blockSizeOne
+            // 
+            this.blockSizeOne.AutoSize = true;
+            this.blockSizeOne.Location = new System.Drawing.Point(0, 0);
+            this.blockSizeOne.Name = "blockSizeOne";
+            this.blockSizeOne.Size = new System.Drawing.Size(113, 17);
+            this.blockSizeOne.TabIndex = 0;
+            this.blockSizeOne.Text = "Block Size 1 Word";
+            this.blockSizeOne.UseVisualStyleBackColor = true;
+            this.blockSizeOne.CheckedChanged += new System.EventHandler(this.blockSizeOne_CheckedChanged);
+            // 
+            // wordSizeTwo
+            // 
+            this.wordSizeTwo.AutoSize = true;
+            this.wordSizeTwo.Checked = true;
+            this.wordSizeTwo.Location = new System.Drawing.Point(0, 23);
+            this.wordSizeTwo.Name = "wordSizeTwo";
+            this.wordSizeTwo.Size = new System.Drawing.Size(113, 17);
+            this.wordSizeTwo.TabIndex = 1;
+            this.wordSizeTwo.TabStop = true;
+            this.wordSizeTwo.Text = "Block Size 2 Word";
+            this.wordSizeTwo.UseVisualStyleBackColor = true;
+            this.wordSizeTwo.CheckedChanged += new System.EventHandler(this.wordSizeTwo_CheckedChanged);
+            // 
+            // CacheSizeTrack
+            // 
+            this.CacheSizeTrack.LargeChange = 1;
+            this.CacheSizeTrack.Location = new System.Drawing.Point(893, 191);
+            this.CacheSizeTrack.Maximum = 16;
+            this.CacheSizeTrack.Minimum = 2;
+            this.CacheSizeTrack.Name = "CacheSizeTrack";
+            this.CacheSizeTrack.Size = new System.Drawing.Size(150, 45);
+            this.CacheSizeTrack.TabIndex = 24;
+            this.CacheSizeTrack.Value = 8;
+            this.CacheSizeTrack.Scroll += new System.EventHandler(this.CacheSizeTrack_Scroll);
+            // 
+            // cacheSizeLabel
+            // 
+            this.cacheSizeLabel.AutoSize = true;
+            this.cacheSizeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cacheSizeLabel.Location = new System.Drawing.Point(893, 172);
+            this.cacheSizeLabel.Name = "cacheSizeLabel";
+            this.cacheSizeLabel.Size = new System.Drawing.Size(159, 16);
+            this.cacheSizeLabel.TabIndex = 25;
+            this.cacheSizeLabel.Text = "Cache Size!  2 - 16 blocks";
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(691, 436);
+            this.ClientSize = new System.Drawing.Size(1104, 436);
+            this.Controls.Add(this.cacheSizeLabel);
+            this.Controls.Add(this.CacheSizeTrack);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.cacheViewLabel);
+            this.Controls.Add(this.cacheViewText);
+            this.Controls.Add(this.WriteMissValue);
+            this.Controls.Add(this.WriteMissLabel);
+            this.Controls.Add(this.WriteHitValue);
+            this.Controls.Add(this.WriteHitLabel);
+            this.Controls.Add(this.ReadMissValue);
+            this.Controls.Add(this.ReadMissLabel);
+            this.Controls.Add(this.ReadHitValue);
+            this.Controls.Add(this.ReadHitLabel);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.nxtInsLabel);
             this.Controls.Add(this.label27);
@@ -421,6 +636,11 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CacheSizeTrack)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -462,6 +682,24 @@
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label nxtInsLabel;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label ReadHitLabel;
+        private System.Windows.Forms.Label ReadHitValue;
+        private System.Windows.Forms.Label ReadMissLabel;
+        private System.Windows.Forms.Label ReadMissValue;
+        private System.Windows.Forms.Label WriteHitLabel;
+        private System.Windows.Forms.Label WriteHitValue;
+        private System.Windows.Forms.Label WriteMissLabel;
+        private System.Windows.Forms.Label WriteMissValue;
+        private System.Windows.Forms.Label cacheViewText;
+        private System.Windows.Forms.Label cacheViewLabel;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RadioButton twoWayMap;
+        private System.Windows.Forms.RadioButton directButton;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.RadioButton wordSizeTwo;
+        private System.Windows.Forms.RadioButton blockSizeOne;
+        private System.Windows.Forms.TrackBar CacheSizeTrack;
+        private System.Windows.Forms.Label cacheSizeLabel;
 
 
     }

@@ -11,20 +11,23 @@ namespace GeminiCore
 {
     public class CPU
     {
-        short registerA = 0;
-        short registerB = 0;
+        #region REGISTERS : public short register_name
+        public short registerA = 0;
+        public short registerB = 0;
         public short registerACC = 0;
-        short registerZERO = 0;
-        short registerONE = 1;
+        public short registerZERO = 0;
+        public short registerONE = 1;
         public short registerPC = 0;
-        short registerMAR = 0;
-        short registerMDR = 0;
-        short registerTEMP = 0;
-        short registerIR = 0;
-        short registerCC = 0;
+        public short registerMAR = 0;
+        public short registerMDR = 0;
+        public short registerTEMP = 0;
+        public short registerIR = 0;
+        public short registerCC = 0;
+        #endregion
         public IAE engine;
         public Memory memory;
         public short currentIns;
+        public short nextInstruct;
         public int currentInsNum;
 
         public CPU()
@@ -38,6 +41,7 @@ namespace GeminiCore
             memory.instructions = engine.readBinFile();
             currentInsNum = 0;
             currentIns = memory.instructions[currentInsNum];
+            nextInstruct = memory.instructions[currentInsNum + 1];
         }
 
         public void decode(short bin){
@@ -52,19 +56,19 @@ namespace GeminiCore
             op = (bin & negativeOp) >> 9;
             iFlag = (bin & negativeIFlag) >> 8;
             value = (bin & negativeValue);
-
-            switch(op){
+            #region EXECUTE : executes command
+            switch (op){
                 case 1:
                     if(iFlag == 1){ //LDA
                         registerACC = (short)value; //imm
                     }
                     else
                     {
-                        registerACC = (short)memory.stack[value]; //mem
+                        registerACC = (short)memory[(short)value]; //mem
                     }
                     break;
                 case 2: //STA
-                    memory.stack[value] = registerACC; // mem
+                    memory[(short)value] = registerACC; // mem
                     break;
                 case 3: //ADD
                     if(iFlag == 1){
@@ -72,7 +76,7 @@ namespace GeminiCore
                     }
                     else
                     {
-                        registerACC += (short)memory.stack[value]; // mem
+                        registerACC += (short)memory[(short)value]; // mem
                     }
                     break;
                 case 4: //SUB
@@ -82,7 +86,7 @@ namespace GeminiCore
                     }
                     else
                     {
-                        registerACC -= (short)memory.stack[value]; // mem
+                        registerACC -= (short)memory[(short)value]; // mem
                     }
                     break;
                 case 5: //MUL
@@ -91,7 +95,7 @@ namespace GeminiCore
                     }
                     else
                     {
-                        registerACC *= (short)memory.stack[value]; //mem
+                        registerACC *= (short)memory[(short)value]; //mem
                     }
                     break;
                 case 6: //DIV
@@ -101,7 +105,7 @@ namespace GeminiCore
                     }
                     else
                     {
-                        registerACC /= (short)memory.stack[value];//mem
+                        registerACC /= (short)memory[(short)value];//mem
                     }
                     break;
                 case 7: //AND
@@ -111,17 +115,17 @@ namespace GeminiCore
                     }
                     else
                     {
-                        registerACC = (short)(registerACC & memory.stack[value]);  //mem
+                        registerACC = (short)(registerACC & memory[(short)value]);  //mem
                     }
                     break;
                 case 8: //OR
                     if (iFlag == 1)
                     {
-                        registerACC = (short)(registerACC | value); //imm
+                        registerACC = (short)(registerACC | (short)value); //imm
                     }
                     else
                     {
-                        registerACC = (short)((int)registerACC|(int)memory.stack[value]); //mem
+                        registerACC = (short)((int)registerACC|(int)memory[(short)value]); //mem
                     }
                     break;
                 case 9: //SHL
@@ -150,6 +154,7 @@ namespace GeminiCore
                     break;
 
             }
+            #endregion
         }
 
     }

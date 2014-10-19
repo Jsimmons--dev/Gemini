@@ -24,7 +24,52 @@ namespace GeminiCPU
         }
 
         CPU cpu;
-
+        #region cacheInfo : hit and miss info
+        public string ReadHit
+        {
+            get
+            {
+                return this.ReadHitValue.Text;
+            }
+            set
+            {
+                this.ReadHitValue.Text = value;
+            }
+        }
+        public string ReadMiss
+        {
+            get
+            {
+                return this.ReadMissValue.Text;
+            }
+            set
+            {
+                this.ReadMissValue.Text = value;
+            }
+        }
+        public string WriteHit
+        {
+            get
+            {
+                return this.WriteHitValue.Text;
+            }
+            set
+            {
+                this.WriteHitValue.Text = value;
+            }
+        }
+        public string WriteMiss
+        {
+            get
+            {
+                return this.WriteMissValue.Text;
+            }
+            set
+            {
+                this.WriteMissValue.Text = value;
+            }
+        }
+        #endregion
         public string nxtIns
         {
             get
@@ -36,6 +81,7 @@ namespace GeminiCPU
                 this.nxtInsLabel.Text = value;
             }
         }
+        #region registers : register selectors
         public string a
         {
             get
@@ -157,7 +203,7 @@ namespace GeminiCPU
                 this.ccReg.Text = value;
             }
         }
-
+        #endregion
         public string insIndexL
         {
             get
@@ -169,7 +215,17 @@ namespace GeminiCPU
                 this.insIndex.Text = value;
             }
         }
-
+        public string cacheView
+        {
+            get
+            {
+                return this.cacheViewLabel.Text;
+            }
+            set
+            {
+                this.cacheViewLabel.Text = value;
+            }
+        }
 
 
         public void updateIndex()
@@ -180,6 +236,19 @@ namespace GeminiCPU
                 insIndexL = "-/0";
                 nxtIns = "----------";
             }
+        }
+
+        public void updateCacheInfo()
+        {
+            ReadHit = Convert.ToString(cpu.memory.cacheReadHit);
+            ReadMiss = Convert.ToString(cpu.memory.cacheReadMiss);
+            WriteHit = Convert.ToString(cpu.memory.cacheWriteHit);
+            WriteMiss = Convert.ToString(cpu.memory.cacheWriteMiss);
+        }
+
+        public void updateCacheView()
+        {
+            cacheView = Convert.ToString(cpu.memory.cache);
         }
 
         public void setUpFirstIns()
@@ -194,8 +263,6 @@ namespace GeminiCPU
 
         }
 
-
-
         private void label8_Click(object sender, EventArgs e)
         {
 
@@ -206,7 +273,9 @@ namespace GeminiCPU
 
         }
 
-        private void button4_Click(object sender, EventArgs e)
+     
+
+        private void nextButton_Click(object sender, EventArgs e)
         {
             try
             {
@@ -223,11 +292,14 @@ namespace GeminiCPU
                     acc = "0b " + Convert.ToString(cpu.registerACC, 2);
                     pc = "0b " + Convert.ToString(cpu.registerPC, 2);
                     updateIndex();
+                    updateCacheInfo();
+                    updateCacheView();
                 }
             }
             catch (NullReferenceException exception)
             {
                 MessageBox.Show("No File Loaded");
+                Console.Write(exception.StackTrace);
             }
         }
 
@@ -262,7 +334,9 @@ namespace GeminiCPU
             cpu = new CPU();
             cpu.currentInsNum = 0;
             cpu.registerPC = 0;
+            updateCacheView();
             updateIndex();
+            updateCacheInfo();
             if(cpu.memory.instructions != null){
             cpu.currentIns = cpu.memory.instructions[cpu.currentInsNum];
             nxtIns = cpu.engine.binaryParse(cpu.currentIns);
@@ -294,6 +368,8 @@ namespace GeminiCPU
                     acc = "0b " + Convert.ToString(cpu.registerACC, 2);
                     pc = "0b " + Convert.ToString(cpu.registerPC, 2);
                     updateIndex();
+                    updateCacheView();
+                    updateCacheInfo();
                 }
                 MessageBox.Show("End of File Reached");
             }
@@ -316,6 +392,8 @@ namespace GeminiCPU
                     cpu.engine.Assemble(cpu.engine.path,"g.out");
                     cpu.fillMem();
                     setUpFirstIns();
+                    updateCacheInfo();
+                    updateCacheView();
                 }
                 catch (SyntaxException exception)
                 {
@@ -327,7 +405,67 @@ namespace GeminiCPU
                     MessageBox.Show("Memory was addressed out of bounds");
                     resetButton_Click(null, null);
                 }
+                catch (ArgMismatchException argE)
+                {
+                    MessageBox.Show("argument mispatch in source");
+                    resetButton_Click(null,null);
+                }
+                catch (InvalidCommandException inE)
+                {
+                    MessageBox.Show("invalid command in source");
+                    resetButton_Click(null, null);
+                }
+                catch(InvalidArgFormattingException inAE)
+                {
+                    MessageBox.Show("argument formatted incorrectly in source");
+                    resetButton_Click(null, null);
+                }
+                catch (InvalidLabelNameException inL)
+                {
+                    MessageBox.Show("label not defined in source");
+                    resetButton_Click(null, null);
+                }
             }
+        }
+
+        private void label18_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CacheView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void directButton_CheckedChanged(object sender, EventArgs e)
+        {
+            Memory.frameSetSize = 1;
+            resetButton_Click(null, null);
+        }
+
+        private void twoWayMap_CheckedChanged(object sender, EventArgs e)
+        {
+            Memory.frameSetSize = 2;
+            resetButton_Click(null,null);
+        }
+
+        private void blockSizeOne_CheckedChanged(object sender, EventArgs e)
+        {
+            Memory.blockSize = 1;
+            resetButton_Click(null, null);
+        }
+
+        private void wordSizeTwo_CheckedChanged(object sender, EventArgs e)
+        {
+            Memory.blockSize = 2;
+            resetButton_Click(null, null);
+        }
+
+        private void CacheSizeTrack_Scroll(object sender, EventArgs e)
+        {
+            Memory.cacheSize = CacheSizeTrack.Value;
+            resetButton_Click(null, null);
         }
     }
 }
