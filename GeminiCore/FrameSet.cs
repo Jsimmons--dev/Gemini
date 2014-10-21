@@ -1,4 +1,7 @@
-﻿using System;
+/*
+ Joshua Simmons and Shane Hayfcz
+*/﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +12,7 @@ namespace GeminiCore
     public class FrameSet
     {
         public Frame[] frames = new Frame[Memory.frameSetSize];
-       
+
         public FrameSet()
         {
             for(int i = 0;i<Memory.frameSetSize;i++)

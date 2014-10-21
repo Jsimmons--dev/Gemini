@@ -1,3 +1,6 @@
+/*
+ Joshua Simmons and Shane Hayfcz
+*/
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
