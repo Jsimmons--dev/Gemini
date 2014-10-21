@@ -110,7 +110,7 @@ namespace GeminiCore
             Frame replaceable = cache[setNum].frames[randNum];
             if (replaceable.dirtyBit)
             {
-                writeToMem(replaceable, address);
+                writeToMem(replaceable, (short)(replaceable.tag*blockSize));
             }
             cache[setNum].frames[randNum] = newFrame;
             return newFrame.data[address % blockSize];
@@ -120,7 +120,7 @@ namespace GeminiCore
         {
             for (int i = 0; i < blockSize; i++)
             {
-                stack[(address - address % blockSize) + i] = replaceable.data[i];
+                stack[(address - (address % blockSize)) + i] = replaceable.data[i];
             }
         }
 
@@ -151,14 +151,28 @@ namespace GeminiCore
         {
             int blkNum = getBlkNum(address);
             for (int i = 0; i < frameSetSize; i++)
+            {
                 if (cache[setNum].frames[i].tag == blkNum)
+                {
                     return i;
+                }
+            }
             return -1;
         }
 
         public int getBlkNum(short address)
         {
             return (address - address % blockSize) / blockSize;
+        }
+
+        public override string ToString()
+        {
+            string memString = "";
+            for(int i = 0;i<memSize;i++)
+            {
+                memString+= " @:"+i+": " + stack[i]+"\r\n";
+            }
+            return memString;
         }
     }
 }

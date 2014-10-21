@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GeminiCore;
+using System.IO;
 
 namespace GeminiCPU
 {
@@ -24,6 +25,18 @@ namespace GeminiCPU
         }
 
         CPU cpu;
+
+        public string memoryL
+        {
+            get
+            {
+                return this.memory.Text;
+            }
+            set
+            {
+                this.memory.Text = value;
+            }
+        }
         #region cacheInfo : hit and miss info
         public string ReadHit
         {
@@ -230,9 +243,12 @@ namespace GeminiCPU
 
         public void updateIndex()
         {
-            try {
-            insIndexL = cpu.registerPC + "/" + cpu.memory.instructions.Count;
-            } catch(NullReferenceException exception){
+            try
+            {
+                insIndexL = cpu.registerPC + "/" + cpu.memory.instructions.Count;
+            }
+            catch (NullReferenceException exception)
+            {
                 insIndexL = "-/0";
                 nxtIns = "----------";
             }
@@ -245,9 +261,10 @@ namespace GeminiCPU
             WriteHit = Convert.ToString(cpu.memory.cacheWriteHit);
             WriteMiss = Convert.ToString(cpu.memory.cacheWriteMiss);
         }
-
+        //also updates memory view
         public void updateCacheView()
         {
+            memoryL = Convert.ToString(cpu.memory);
             cacheView = Convert.ToString(cpu.memory.cache);
         }
 
@@ -273,7 +290,28 @@ namespace GeminiCPU
 
         }
 
-     
+
+        public void logCacheResults()
+        {
+            string path = Application.StartupPath + "../../../logFile.csv";
+            if (!File.Exists(path))
+            {
+                // Create a file to write to. 
+                using (StreamWriter sw = File.CreateText(path))
+                {
+                    sw.WriteLine("Log\n");
+                }
+            }
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                sw.Write("\r\n" + cpu.memory.cacheReadHit + ",");
+                sw.Write(cpu.memory.cacheReadMiss + ",");
+                sw.Write(cpu.memory.cacheWriteHit + ",");
+                sw.Write(cpu.memory.cacheWriteMiss + ",");
+                sw.Write(Memory.blockSize+","+Memory.cacheSize+","+Memory.frameSetSize+"\n");
+                sw.Flush();
+            }
+        }
 
         private void nextButton_Click(object sender, EventArgs e)
         {
@@ -281,6 +319,7 @@ namespace GeminiCPU
             {
                 if (cpu.registerPC > cpu.memory.instructions.Count - 1)
                 {
+                    logCacheResults();
                     MessageBox.Show("End of File Reached");
                 }
                 else
@@ -316,10 +355,11 @@ namespace GeminiCPU
         private void button2_Click(object sender, EventArgs e)
         {
             cpu.registerPC = 0;
-            if(cpu.memory.instructions != null){
-            cpu.currentIns = cpu.memory.instructions[cpu.registerPC];
-            nxtIns = cpu.engine.binaryParse(cpu.currentIns);
-            updateIndex();
+            if (cpu.memory.instructions != null)
+            {
+                cpu.currentIns = cpu.memory.instructions[cpu.registerPC];
+                nxtIns = cpu.engine.binaryParse(cpu.currentIns);
+                updateIndex();
             }
 
         }
@@ -337,11 +377,12 @@ namespace GeminiCPU
             updateCacheView();
             updateIndex();
             updateCacheInfo();
-            if(cpu.memory.instructions != null){
-            cpu.currentIns = cpu.memory.instructions[cpu.currentInsNum];
-            nxtIns = cpu.engine.binaryParse(cpu.currentIns);
-            cpu.engine.resetLabelDic();
-            cpu.memory.resetInstructions();
+            if (cpu.memory.instructions != null)
+            {
+                cpu.currentIns = cpu.memory.instructions[cpu.currentInsNum];
+                nxtIns = cpu.engine.binaryParse(cpu.currentIns);
+                cpu.engine.resetLabelDic();
+                cpu.memory.resetInstructions();
             }
             a = "0b 0";
             b = "0b 0";
@@ -371,13 +412,14 @@ namespace GeminiCPU
                     updateCacheView();
                     updateCacheInfo();
                 }
+                logCacheResults();
                 MessageBox.Show("End of File Reached");
             }
             catch (NullReferenceException exception)
             {
                 MessageBox.Show("No File Loaded");
             }
-            }
+        }
 
         //load file button
         private void button1_Click(object sender, EventArgs e)
@@ -389,7 +431,7 @@ namespace GeminiCPU
                 cpu.engine.path = ofd.FileName;
                 try
                 {
-                    cpu.engine.Assemble(cpu.engine.path,"g.out");
+                    cpu.engine.Assemble(cpu.engine.path, "g.out");
                     cpu.fillMem();
                     setUpFirstIns();
                     updateCacheInfo();
@@ -408,14 +450,14 @@ namespace GeminiCPU
                 catch (ArgMismatchException argE)
                 {
                     MessageBox.Show("argument mispatch in source");
-                    resetButton_Click(null,null);
+                    resetButton_Click(null, null);
                 }
                 catch (InvalidCommandException inE)
                 {
                     MessageBox.Show("invalid command in source");
                     resetButton_Click(null, null);
                 }
-                catch(InvalidArgFormattingException inAE)
+                catch (InvalidArgFormattingException inAE)
                 {
                     MessageBox.Show("argument formatted incorrectly in source");
                     resetButton_Click(null, null);
@@ -447,7 +489,7 @@ namespace GeminiCPU
         private void twoWayMap_CheckedChanged(object sender, EventArgs e)
         {
             Memory.frameSetSize = 2;
-            resetButton_Click(null,null);
+            resetButton_Click(null, null);
         }
 
         private void blockSizeOne_CheckedChanged(object sender, EventArgs e)
@@ -466,6 +508,11 @@ namespace GeminiCPU
         {
             Memory.cacheSize = CacheSizeTrack.Value;
             resetButton_Click(null, null);
+        }
+
+        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+
         }
     }
 }

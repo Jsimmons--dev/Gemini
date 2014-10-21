@@ -73,13 +73,15 @@
             this.cacheViewText = new System.Windows.Forms.Label();
             this.cacheViewLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.directButton = new System.Windows.Forms.RadioButton();
             this.twoWayMap = new System.Windows.Forms.RadioButton();
+            this.directButton = new System.Windows.Forms.RadioButton();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.blockSizeOne = new System.Windows.Forms.RadioButton();
             this.wordSizeTwo = new System.Windows.Forms.RadioButton();
+            this.blockSizeOne = new System.Windows.Forms.RadioButton();
             this.CacheSizeTrack = new System.Windows.Forms.TrackBar();
             this.cacheSizeLabel = new System.Windows.Forms.Label();
+            this.memoryLabel = new System.Windows.Forms.Label();
+            this.memory = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -517,10 +519,22 @@
             // 
             this.panel1.Controls.Add(this.twoWayMap);
             this.panel1.Controls.Add(this.directButton);
-            this.panel1.Location = new System.Drawing.Point(893, 297);
+            this.panel1.Location = new System.Drawing.Point(1132, 191);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(147, 40);
             this.panel1.TabIndex = 22;
+            // 
+            // twoWayMap
+            // 
+            this.twoWayMap.AutoSize = true;
+            this.twoWayMap.Location = new System.Drawing.Point(0, 23);
+            this.twoWayMap.Name = "twoWayMap";
+            this.twoWayMap.Size = new System.Drawing.Size(132, 17);
+            this.twoWayMap.TabIndex = 1;
+            this.twoWayMap.TabStop = true;
+            this.twoWayMap.Text = "2-Way Set Associative";
+            this.twoWayMap.UseVisualStyleBackColor = true;
+            this.twoWayMap.CheckedChanged += new System.EventHandler(this.twoWayMap_CheckedChanged);
             // 
             // directButton
             // 
@@ -535,37 +549,14 @@
             this.directButton.UseVisualStyleBackColor = true;
             this.directButton.CheckedChanged += new System.EventHandler(this.directButton_CheckedChanged);
             // 
-            // twoWayMap
-            // 
-            this.twoWayMap.AutoSize = true;
-            this.twoWayMap.Location = new System.Drawing.Point(0, 23);
-            this.twoWayMap.Name = "twoWayMap";
-            this.twoWayMap.Size = new System.Drawing.Size(132, 17);
-            this.twoWayMap.TabIndex = 1;
-            this.twoWayMap.TabStop = true;
-            this.twoWayMap.Text = "2-Way Set Associative";
-            this.twoWayMap.UseVisualStyleBackColor = true;
-            this.twoWayMap.CheckedChanged += new System.EventHandler(this.twoWayMap_CheckedChanged);
-            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.wordSizeTwo);
             this.panel2.Controls.Add(this.blockSizeOne);
-            this.panel2.Location = new System.Drawing.Point(893, 251);
+            this.panel2.Location = new System.Drawing.Point(1132, 121);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(150, 40);
             this.panel2.TabIndex = 23;
-            // 
-            // blockSizeOne
-            // 
-            this.blockSizeOne.AutoSize = true;
-            this.blockSizeOne.Location = new System.Drawing.Point(0, 0);
-            this.blockSizeOne.Name = "blockSizeOne";
-            this.blockSizeOne.Size = new System.Drawing.Size(113, 17);
-            this.blockSizeOne.TabIndex = 0;
-            this.blockSizeOne.Text = "Block Size 1 Word";
-            this.blockSizeOne.UseVisualStyleBackColor = true;
-            this.blockSizeOne.CheckedChanged += new System.EventHandler(this.blockSizeOne_CheckedChanged);
             // 
             // wordSizeTwo
             // 
@@ -580,10 +571,21 @@
             this.wordSizeTwo.UseVisualStyleBackColor = true;
             this.wordSizeTwo.CheckedChanged += new System.EventHandler(this.wordSizeTwo_CheckedChanged);
             // 
+            // blockSizeOne
+            // 
+            this.blockSizeOne.AutoSize = true;
+            this.blockSizeOne.Location = new System.Drawing.Point(0, 0);
+            this.blockSizeOne.Name = "blockSizeOne";
+            this.blockSizeOne.Size = new System.Drawing.Size(113, 17);
+            this.blockSizeOne.TabIndex = 0;
+            this.blockSizeOne.Text = "Block Size 1 Word";
+            this.blockSizeOne.UseVisualStyleBackColor = true;
+            this.blockSizeOne.CheckedChanged += new System.EventHandler(this.blockSizeOne_CheckedChanged);
+            // 
             // CacheSizeTrack
             // 
             this.CacheSizeTrack.LargeChange = 1;
-            this.CacheSizeTrack.Location = new System.Drawing.Point(893, 191);
+            this.CacheSizeTrack.Location = new System.Drawing.Point(1123, 70);
             this.CacheSizeTrack.Maximum = 16;
             this.CacheSizeTrack.Minimum = 2;
             this.CacheSizeTrack.Name = "CacheSizeTrack";
@@ -596,17 +598,38 @@
             // 
             this.cacheSizeLabel.AutoSize = true;
             this.cacheSizeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cacheSizeLabel.Location = new System.Drawing.Point(893, 172);
+            this.cacheSizeLabel.Location = new System.Drawing.Point(1120, 39);
             this.cacheSizeLabel.Name = "cacheSizeLabel";
             this.cacheSizeLabel.Size = new System.Drawing.Size(159, 16);
             this.cacheSizeLabel.TabIndex = 25;
             this.cacheSizeLabel.Text = "Cache Size!  2 - 16 blocks";
             // 
+            // memoryLabel
+            // 
+            this.memoryLabel.AutoSize = true;
+            this.memoryLabel.Location = new System.Drawing.Point(881, 20);
+            this.memoryLabel.Name = "memoryLabel";
+            this.memoryLabel.Size = new System.Drawing.Size(43, 13);
+            this.memoryLabel.TabIndex = 26;
+            this.memoryLabel.Text = "memory";
+            // 
+            // memory
+            // 
+            this.memory.AcceptsReturn = true;
+            this.memory.AcceptsTab = true;
+            this.memory.Location = new System.Drawing.Point(884, 50);
+            this.memory.Multiline = true;
+            this.memory.Name = "memory";
+            this.memory.Size = new System.Drawing.Size(123, 467);
+            this.memory.TabIndex = 28;
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1104, 436);
+            this.ClientSize = new System.Drawing.Size(1401, 518);
+            this.Controls.Add(this.memory);
+            this.Controls.Add(this.memoryLabel);
             this.Controls.Add(this.cacheSizeLabel);
             this.Controls.Add(this.CacheSizeTrack);
             this.Controls.Add(this.panel2);
@@ -700,6 +723,8 @@
         private System.Windows.Forms.RadioButton blockSizeOne;
         private System.Windows.Forms.TrackBar CacheSizeTrack;
         private System.Windows.Forms.Label cacheSizeLabel;
+        private System.Windows.Forms.Label memoryLabel;
+        private System.Windows.Forms.TextBox memory;
 
 
     }
