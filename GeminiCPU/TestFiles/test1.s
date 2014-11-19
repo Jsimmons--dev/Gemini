@@ -7,6 +7,7 @@ main:
            
   lda $0
   sub $0     ! 0 in ACC
+  mul $0
 
   lda $0
   and $255   ! 1 & 1 is 1 in ACC

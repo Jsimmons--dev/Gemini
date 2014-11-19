@@ -28,20 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
+            this.RegisterPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.registerColumnLabel = new System.Windows.Forms.Label();
+            this.ValueColumnLabel = new System.Windows.Forms.Label();
+            this.ALabel = new System.Windows.Forms.Label();
+            this.BLabel = new System.Windows.Forms.Label();
+            this.ACCLabel = new System.Windows.Forms.Label();
+            this.ZEROLabel = new System.Windows.Forms.Label();
+            this.ONELabel = new System.Windows.Forms.Label();
+            this.PCLabel = new System.Windows.Forms.Label();
+            this.MARLabel = new System.Windows.Forms.Label();
+            this.MDRLabel = new System.Windows.Forms.Label();
+            this.TEMPLabel = new System.Windows.Forms.Label();
+            this.IRLabel = new System.Windows.Forms.Label();
+            this.CCLabel = new System.Windows.Forms.Label();
             this.aReg = new System.Windows.Forms.Label();
             this.bReg = new System.Windows.Forms.Label();
             this.accReg = new System.Windows.Forms.Label();
@@ -53,14 +53,14 @@
             this.tempReg = new System.Windows.Forms.Label();
             this.irReg = new System.Windows.Forms.Label();
             this.ccReg = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.LoadButton = new System.Windows.Forms.Button();
             this.resetCPU = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.label25 = new System.Windows.Forms.Label();
+            this.RunToEndButton = new System.Windows.Forms.Button();
+            this.InstructionIndexLabel = new System.Windows.Forms.Label();
             this.insIndex = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.nextInstructionLabel = new System.Windows.Forms.Label();
+            this.rabbitPictureBox = new System.Windows.Forms.PictureBox();
             this.nxtInsLabel = new System.Windows.Forms.Label();
             this.ReadHitLabel = new System.Windows.Forms.Label();
             this.ReadHitValue = new System.Windows.Forms.Label();
@@ -82,168 +82,174 @@
             this.cacheSizeLabel = new System.Windows.Forms.Label();
             this.memoryLabel = new System.Windows.Forms.Label();
             this.memory = new System.Windows.Forms.TextBox();
-            this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.fetchNameLabel = new System.Windows.Forms.Label();
+            this.fetchLabel = new System.Windows.Forms.Label();
+            this.decodeNameLabel = new System.Windows.Forms.Label();
+            this.decodeLabel = new System.Windows.Forms.Label();
+            this.executeNameLabel = new System.Windows.Forms.Label();
+            this.executeLabel = new System.Windows.Forms.Label();
+            this.writebackNameLabel = new System.Windows.Forms.Label();
+            this.writebackLabel = new System.Windows.Forms.Label();
+            this.RegisterPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rabbitPictureBox)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CacheSizeTrack)).BeginInit();
             this.SuspendLayout();
             // 
-            // tableLayoutPanel1
+            // RegisterPanel
             // 
-            this.tableLayoutPanel1.AutoSize = true;
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.label6, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.label8, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(this.label9, 0, 7);
-            this.tableLayoutPanel1.Controls.Add(this.label10, 0, 8);
-            this.tableLayoutPanel1.Controls.Add(this.label11, 0, 9);
-            this.tableLayoutPanel1.Controls.Add(this.label12, 0, 10);
-            this.tableLayoutPanel1.Controls.Add(this.label13, 0, 11);
-            this.tableLayoutPanel1.Controls.Add(this.aReg, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.bReg, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.accReg, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.zeroReg, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.oneReg, 1, 5);
-            this.tableLayoutPanel1.Controls.Add(this.pcReg, 1, 6);
-            this.tableLayoutPanel1.Controls.Add(this.marReg, 1, 7);
-            this.tableLayoutPanel1.Controls.Add(this.mdrReg, 1, 8);
-            this.tableLayoutPanel1.Controls.Add(this.tempReg, 1, 9);
-            this.tableLayoutPanel1.Controls.Add(this.irReg, 1, 10);
-            this.tableLayoutPanel1.Controls.Add(this.ccReg, 1, 11);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 125);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 12;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(470, 246);
-            this.tableLayoutPanel1.TabIndex = 0;
-            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
+            this.RegisterPanel.AutoSize = true;
+            this.RegisterPanel.ColumnCount = 2;
+            this.RegisterPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.RegisterPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.RegisterPanel.Controls.Add(this.registerColumnLabel, 0, 0);
+            this.RegisterPanel.Controls.Add(this.ValueColumnLabel, 1, 0);
+            this.RegisterPanel.Controls.Add(this.ALabel, 0, 1);
+            this.RegisterPanel.Controls.Add(this.BLabel, 0, 2);
+            this.RegisterPanel.Controls.Add(this.ACCLabel, 0, 3);
+            this.RegisterPanel.Controls.Add(this.ZEROLabel, 0, 4);
+            this.RegisterPanel.Controls.Add(this.ONELabel, 0, 5);
+            this.RegisterPanel.Controls.Add(this.PCLabel, 0, 6);
+            this.RegisterPanel.Controls.Add(this.MARLabel, 0, 7);
+            this.RegisterPanel.Controls.Add(this.MDRLabel, 0, 8);
+            this.RegisterPanel.Controls.Add(this.TEMPLabel, 0, 9);
+            this.RegisterPanel.Controls.Add(this.IRLabel, 0, 10);
+            this.RegisterPanel.Controls.Add(this.CCLabel, 0, 11);
+            this.RegisterPanel.Controls.Add(this.aReg, 1, 1);
+            this.RegisterPanel.Controls.Add(this.bReg, 1, 2);
+            this.RegisterPanel.Controls.Add(this.accReg, 1, 3);
+            this.RegisterPanel.Controls.Add(this.zeroReg, 1, 4);
+            this.RegisterPanel.Controls.Add(this.oneReg, 1, 5);
+            this.RegisterPanel.Controls.Add(this.pcReg, 1, 6);
+            this.RegisterPanel.Controls.Add(this.marReg, 1, 7);
+            this.RegisterPanel.Controls.Add(this.mdrReg, 1, 8);
+            this.RegisterPanel.Controls.Add(this.tempReg, 1, 9);
+            this.RegisterPanel.Controls.Add(this.irReg, 1, 10);
+            this.RegisterPanel.Controls.Add(this.ccReg, 1, 11);
+            this.RegisterPanel.Location = new System.Drawing.Point(12, 125);
+            this.RegisterPanel.Name = "RegisterPanel";
+            this.RegisterPanel.RowCount = 12;
+            this.RegisterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.RegisterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.RegisterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.RegisterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.RegisterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.RegisterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.RegisterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.RegisterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.RegisterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.RegisterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.RegisterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.RegisterPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.RegisterPanel.Size = new System.Drawing.Size(470, 246);
+            this.RegisterPanel.TabIndex = 0;
             // 
-            // label1
+            // registerColumnLabel
             // 
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 23);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Register";
+            this.registerColumnLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.registerColumnLabel.Location = new System.Drawing.Point(3, 0);
+            this.registerColumnLabel.Name = "registerColumnLabel";
+            this.registerColumnLabel.Size = new System.Drawing.Size(100, 23);
+            this.registerColumnLabel.TabIndex = 0;
+            this.registerColumnLabel.Text = "Register";
             // 
-            // label2
+            // ValueColumnLabel
             // 
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(238, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(100, 23);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Value";
+            this.ValueColumnLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ValueColumnLabel.Location = new System.Drawing.Point(238, 0);
+            this.ValueColumnLabel.Name = "ValueColumnLabel";
+            this.ValueColumnLabel.Size = new System.Drawing.Size(100, 23);
+            this.ValueColumnLabel.TabIndex = 1;
+            this.ValueColumnLabel.Text = "Value";
             // 
-            // label3
+            // ALabel
             // 
-            this.label3.Location = new System.Drawing.Point(3, 23);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(100, 23);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "A";
+            this.ALabel.Location = new System.Drawing.Point(3, 23);
+            this.ALabel.Name = "ALabel";
+            this.ALabel.Size = new System.Drawing.Size(100, 23);
+            this.ALabel.TabIndex = 2;
+            this.ALabel.Text = "A";
             // 
-            // label4
+            // BLabel
             // 
-            this.label4.Location = new System.Drawing.Point(3, 46);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(100, 20);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "B";
+            this.BLabel.Location = new System.Drawing.Point(3, 46);
+            this.BLabel.Name = "BLabel";
+            this.BLabel.Size = new System.Drawing.Size(100, 20);
+            this.BLabel.TabIndex = 3;
+            this.BLabel.Text = "B";
             // 
-            // label5
+            // ACCLabel
             // 
-            this.label5.Location = new System.Drawing.Point(3, 66);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(100, 20);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "ACC";
+            this.ACCLabel.Location = new System.Drawing.Point(3, 66);
+            this.ACCLabel.Name = "ACCLabel";
+            this.ACCLabel.Size = new System.Drawing.Size(100, 20);
+            this.ACCLabel.TabIndex = 4;
+            this.ACCLabel.Text = "ACC";
             // 
-            // label6
+            // ZEROLabel
             // 
-            this.label6.Location = new System.Drawing.Point(3, 86);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(100, 20);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "ZERO";
+            this.ZEROLabel.Location = new System.Drawing.Point(3, 86);
+            this.ZEROLabel.Name = "ZEROLabel";
+            this.ZEROLabel.Size = new System.Drawing.Size(100, 20);
+            this.ZEROLabel.TabIndex = 5;
+            this.ZEROLabel.Text = "ZERO";
             // 
-            // label7
+            // ONELabel
             // 
-            this.label7.Location = new System.Drawing.Point(3, 106);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(100, 20);
-            this.label7.TabIndex = 6;
-            this.label7.Text = "ONE";
+            this.ONELabel.Location = new System.Drawing.Point(3, 106);
+            this.ONELabel.Name = "ONELabel";
+            this.ONELabel.Size = new System.Drawing.Size(100, 20);
+            this.ONELabel.TabIndex = 6;
+            this.ONELabel.Text = "ONE";
             // 
-            // label8
+            // PCLabel
             // 
-            this.label8.Location = new System.Drawing.Point(3, 126);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(100, 20);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "PC";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
+            this.PCLabel.Location = new System.Drawing.Point(3, 126);
+            this.PCLabel.Name = "PCLabel";
+            this.PCLabel.Size = new System.Drawing.Size(100, 20);
+            this.PCLabel.TabIndex = 7;
+            this.PCLabel.Text = "PC";
             // 
-            // label9
+            // MARLabel
             // 
-            this.label9.Location = new System.Drawing.Point(3, 146);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(100, 20);
-            this.label9.TabIndex = 8;
-            this.label9.Text = "MAR";
+            this.MARLabel.Location = new System.Drawing.Point(3, 146);
+            this.MARLabel.Name = "MARLabel";
+            this.MARLabel.Size = new System.Drawing.Size(100, 20);
+            this.MARLabel.TabIndex = 8;
+            this.MARLabel.Text = "MAR";
             // 
-            // label10
+            // MDRLabel
             // 
-            this.label10.Location = new System.Drawing.Point(3, 166);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(100, 20);
-            this.label10.TabIndex = 9;
-            this.label10.Text = "MDR";
+            this.MDRLabel.Location = new System.Drawing.Point(3, 166);
+            this.MDRLabel.Name = "MDRLabel";
+            this.MDRLabel.Size = new System.Drawing.Size(100, 20);
+            this.MDRLabel.TabIndex = 9;
+            this.MDRLabel.Text = "MDR";
             // 
-            // label11
+            // TEMPLabel
             // 
-            this.label11.Location = new System.Drawing.Point(3, 186);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(100, 20);
-            this.label11.TabIndex = 10;
-            this.label11.Text = "TEMP";
+            this.TEMPLabel.Location = new System.Drawing.Point(3, 186);
+            this.TEMPLabel.Name = "TEMPLabel";
+            this.TEMPLabel.Size = new System.Drawing.Size(100, 20);
+            this.TEMPLabel.TabIndex = 10;
+            this.TEMPLabel.Text = "TEMP";
             // 
-            // label12
+            // IRLabel
             // 
-            this.label12.Location = new System.Drawing.Point(3, 206);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(100, 20);
-            this.label12.TabIndex = 11;
-            this.label12.Text = "IR";
+            this.IRLabel.Location = new System.Drawing.Point(3, 206);
+            this.IRLabel.Name = "IRLabel";
+            this.IRLabel.Size = new System.Drawing.Size(100, 20);
+            this.IRLabel.TabIndex = 11;
+            this.IRLabel.Text = "IR";
             // 
-            // label13
+            // CCLabel
             // 
-            this.label13.Location = new System.Drawing.Point(3, 226);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(100, 20);
-            this.label13.TabIndex = 12;
-            this.label13.Text = "CC";
+            this.CCLabel.Location = new System.Drawing.Point(3, 226);
+            this.CCLabel.Name = "CCLabel";
+            this.CCLabel.Size = new System.Drawing.Size(100, 20);
+            this.CCLabel.TabIndex = 12;
+            this.CCLabel.Text = "CC";
             // 
             // aReg
             // 
@@ -277,7 +283,6 @@
             this.zeroReg.Size = new System.Drawing.Size(100, 20);
             this.zeroReg.TabIndex = 16;
             this.zeroReg.Text = "0b 0";
-            this.zeroReg.Click += new System.EventHandler(this.label17_Click);
             // 
             // oneReg
             // 
@@ -335,15 +340,15 @@
             this.ccReg.TabIndex = 23;
             this.ccReg.Text = "0b 0";
             // 
-            // button1
+            // LoadButton
             // 
-            this.button1.Location = new System.Drawing.Point(247, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Load File";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.LoadButton.Location = new System.Drawing.Point(247, 12);
+            this.LoadButton.Name = "LoadButton";
+            this.LoadButton.Size = new System.Drawing.Size(75, 23);
+            this.LoadButton.TabIndex = 1;
+            this.LoadButton.Text = "Load File";
+            this.LoadButton.UseVisualStyleBackColor = true;
+            this.LoadButton.Click += new System.EventHandler(this.loadButton_Click);
             // 
             // resetCPU
             // 
@@ -365,24 +370,24 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.nextButton_Click);
             // 
-            // button5
+            // RunToEndButton
             // 
-            this.button5.Location = new System.Drawing.Point(357, 400);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(93, 23);
-            this.button5.TabIndex = 5;
-            this.button5.Text = "Run to End";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.RunToEndButton.Location = new System.Drawing.Point(357, 400);
+            this.RunToEndButton.Name = "RunToEndButton";
+            this.RunToEndButton.Size = new System.Drawing.Size(93, 23);
+            this.RunToEndButton.TabIndex = 5;
+            this.RunToEndButton.Text = "Run to End";
+            this.RunToEndButton.UseVisualStyleBackColor = true;
+            this.RunToEndButton.Click += new System.EventHandler(this.runButton_Click);
             // 
-            // label25
+            // InstructionIndexLabel
             // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(30, 72);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(85, 13);
-            this.label25.TabIndex = 6;
-            this.label25.Text = "Instruction Index";
+            this.InstructionIndexLabel.AutoSize = true;
+            this.InstructionIndexLabel.Location = new System.Drawing.Point(30, 72);
+            this.InstructionIndexLabel.Name = "InstructionIndexLabel";
+            this.InstructionIndexLabel.Size = new System.Drawing.Size(85, 13);
+            this.InstructionIndexLabel.TabIndex = 6;
+            this.InstructionIndexLabel.Text = "Instruction Index";
             // 
             // insIndex
             // 
@@ -392,27 +397,25 @@
             this.insIndex.Size = new System.Drawing.Size(21, 13);
             this.insIndex.TabIndex = 7;
             this.insIndex.Text = "-/0";
-            this.insIndex.Click += new System.EventHandler(this.label26_Click);
             // 
-            // label27
+            // nextInstructionLabel
             // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(30, 89);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(76, 13);
-            this.label27.TabIndex = 8;
-            this.label27.Text = "Next Intruction";
-            this.label27.Click += new System.EventHandler(this.label27_Click);
+            this.nextInstructionLabel.AutoSize = true;
+            this.nextInstructionLabel.Location = new System.Drawing.Point(30, 89);
+            this.nextInstructionLabel.Name = "nextInstructionLabel";
+            this.nextInstructionLabel.Size = new System.Drawing.Size(76, 13);
+            this.nextInstructionLabel.TabIndex = 8;
+            this.nextInstructionLabel.Text = "Next Intruction";
             // 
-            // pictureBox1
+            // rabbitPictureBox
             // 
-            this.pictureBox1.Image = global::GeminiCPU.Properties.Resources.chubby;
-            this.pictureBox1.Location = new System.Drawing.Point(488, 89);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(192, 299);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 10;
-            this.pictureBox1.TabStop = false;
+            this.rabbitPictureBox.Image = global::GeminiCPU.Properties.Resources.chubby;
+            this.rabbitPictureBox.Location = new System.Drawing.Point(488, 89);
+            this.rabbitPictureBox.Name = "rabbitPictureBox";
+            this.rabbitPictureBox.Size = new System.Drawing.Size(192, 299);
+            this.rabbitPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.rabbitPictureBox.TabIndex = 10;
+            this.rabbitPictureBox.TabStop = false;
             // 
             // nxtInsLabel
             // 
@@ -422,7 +425,6 @@
             this.nxtInsLabel.Size = new System.Drawing.Size(37, 13);
             this.nxtInsLabel.TabIndex = 9;
             this.nxtInsLabel.Text = "----------";
-            this.nxtInsLabel.Click += new System.EventHandler(this.label28_Click);
             // 
             // ReadHitLabel
             // 
@@ -468,7 +470,6 @@
             this.WriteHitLabel.Size = new System.Drawing.Size(45, 13);
             this.WriteHitLabel.TabIndex = 16;
             this.WriteHitLabel.Text = "WriteHit";
-            this.WriteHitLabel.Click += new System.EventHandler(this.label18_Click);
             // 
             // WriteHitValue
             // 
@@ -623,11 +624,87 @@
             this.memory.Size = new System.Drawing.Size(123, 467);
             this.memory.TabIndex = 28;
             // 
+            // fetchNameLabel
+            // 
+            this.fetchNameLabel.AutoSize = true;
+            this.fetchNameLabel.Location = new System.Drawing.Point(31, 479);
+            this.fetchNameLabel.Name = "fetchNameLabel";
+            this.fetchNameLabel.Size = new System.Drawing.Size(48, 13);
+            this.fetchNameLabel.TabIndex = 29;
+            this.fetchNameLabel.Text = "FETCH: ";
+            // 
+            // fetchLabel
+            // 
+            this.fetchLabel.AutoSize = true;
+            this.fetchLabel.Location = new System.Drawing.Point(88, 478);
+            this.fetchLabel.Name = "fetchLabel";
+            this.fetchLabel.Size = new System.Drawing.Size(0, 13);
+            this.fetchLabel.TabIndex = 30;
+            // 
+            // decodeNameLabel
+            // 
+            this.decodeNameLabel.AutoSize = true;
+            this.decodeNameLabel.Location = new System.Drawing.Point(30, 492);
+            this.decodeNameLabel.Name = "decodeNameLabel";
+            this.decodeNameLabel.Size = new System.Drawing.Size(58, 13);
+            this.decodeNameLabel.TabIndex = 31;
+            this.decodeNameLabel.Text = "DECODE: ";
+            // 
+            // decodeLabel
+            // 
+            this.decodeLabel.AutoSize = true;
+            this.decodeLabel.Location = new System.Drawing.Point(88, 491);
+            this.decodeLabel.Name = "decodeLabel";
+            this.decodeLabel.Size = new System.Drawing.Size(0, 13);
+            this.decodeLabel.TabIndex = 32;
+            // 
+            // executeNameLabel
+            // 
+            this.executeNameLabel.AutoSize = true;
+            this.executeNameLabel.Location = new System.Drawing.Point(30, 504);
+            this.executeNameLabel.Name = "executeNameLabel";
+            this.executeNameLabel.Size = new System.Drawing.Size(63, 13);
+            this.executeNameLabel.TabIndex = 33;
+            this.executeNameLabel.Text = "EXECUTE: ";
+            // 
+            // executeLabel
+            // 
+            this.executeLabel.AutoSize = true;
+            this.executeLabel.Location = new System.Drawing.Point(99, 504);
+            this.executeLabel.Name = "executeLabel";
+            this.executeLabel.Size = new System.Drawing.Size(0, 13);
+            this.executeLabel.TabIndex = 34;
+            // 
+            // writebackNameLabel
+            // 
+            this.writebackNameLabel.AutoSize = true;
+            this.writebackNameLabel.Location = new System.Drawing.Point(30, 517);
+            this.writebackNameLabel.Name = "writebackNameLabel";
+            this.writebackNameLabel.Size = new System.Drawing.Size(49, 13);
+            this.writebackNameLabel.TabIndex = 35;
+            this.writebackNameLabel.Text = "WRITE: ";
+            // 
+            // writebackLabel
+            // 
+            this.writebackLabel.AutoSize = true;
+            this.writebackLabel.Location = new System.Drawing.Point(93, 517);
+            this.writebackLabel.Name = "writebackLabel";
+            this.writebackLabel.Size = new System.Drawing.Size(0, 13);
+            this.writebackLabel.TabIndex = 36;
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1401, 518);
+            this.ClientSize = new System.Drawing.Size(1401, 638);
+            this.Controls.Add(this.writebackLabel);
+            this.Controls.Add(this.writebackNameLabel);
+            this.Controls.Add(this.executeLabel);
+            this.Controls.Add(this.executeNameLabel);
+            this.Controls.Add(this.decodeLabel);
+            this.Controls.Add(this.decodeNameLabel);
+            this.Controls.Add(this.fetchLabel);
+            this.Controls.Add(this.fetchNameLabel);
             this.Controls.Add(this.memory);
             this.Controls.Add(this.memoryLabel);
             this.Controls.Add(this.cacheSizeLabel);
@@ -644,21 +721,21 @@
             this.Controls.Add(this.ReadMissLabel);
             this.Controls.Add(this.ReadHitValue);
             this.Controls.Add(this.ReadHitLabel);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.rabbitPictureBox);
             this.Controls.Add(this.nxtInsLabel);
-            this.Controls.Add(this.label27);
+            this.Controls.Add(this.nextInstructionLabel);
             this.Controls.Add(this.insIndex);
-            this.Controls.Add(this.label25);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.InstructionIndexLabel);
+            this.Controls.Add(this.RunToEndButton);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.resetCPU);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.LoadButton);
+            this.Controls.Add(this.RegisterPanel);
             this.Name = "Window";
             this.Text = "Gemini";
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.RegisterPanel.ResumeLayout(false);
+            this.RegisterPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rabbitPictureBox)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -671,20 +748,20 @@
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TableLayoutPanel RegisterPanel;
+        private System.Windows.Forms.Label registerColumnLabel;
+        private System.Windows.Forms.Label ValueColumnLabel;
+        private System.Windows.Forms.Label ALabel;
+        private System.Windows.Forms.Label BLabel;
+        private System.Windows.Forms.Label ACCLabel;
+        private System.Windows.Forms.Label ZEROLabel;
+        private System.Windows.Forms.Label ONELabel;
+        private System.Windows.Forms.Label PCLabel;
+        private System.Windows.Forms.Label MARLabel;
+        private System.Windows.Forms.Label MDRLabel;
+        private System.Windows.Forms.Label TEMPLabel;
+        private System.Windows.Forms.Label IRLabel;
+        private System.Windows.Forms.Label CCLabel;
         private System.Windows.Forms.Label aReg;
         private System.Windows.Forms.Label bReg;
         private System.Windows.Forms.Label accReg;
@@ -696,15 +773,14 @@
         private System.Windows.Forms.Label tempReg;
         private System.Windows.Forms.Label irReg;
         private System.Windows.Forms.Label ccReg;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button LoadButton;
         private System.Windows.Forms.Button resetCPU;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Button RunToEndButton;
+        private System.Windows.Forms.Label InstructionIndexLabel;
         private System.Windows.Forms.Label insIndex;
-        private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label nxtInsLabel;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox rabbitPictureBox;
         private System.Windows.Forms.Label ReadHitLabel;
         private System.Windows.Forms.Label ReadHitValue;
         private System.Windows.Forms.Label ReadMissLabel;
@@ -725,6 +801,15 @@
         private System.Windows.Forms.Label cacheSizeLabel;
         private System.Windows.Forms.Label memoryLabel;
         private System.Windows.Forms.TextBox memory;
+        private System.Windows.Forms.Label nextInstructionLabel;
+        private System.Windows.Forms.Label fetchNameLabel;
+        private System.Windows.Forms.Label fetchLabel;
+        private System.Windows.Forms.Label decodeNameLabel;
+        private System.Windows.Forms.Label decodeLabel;
+        private System.Windows.Forms.Label executeNameLabel;
+        private System.Windows.Forms.Label executeLabel;
+        private System.Windows.Forms.Label writebackNameLabel;
+        private System.Windows.Forms.Label writebackLabel;
 
 
     }

@@ -26,11 +26,10 @@ namespace GeminiCore
         List<int> branchList = new List<int>();
 
         // Dictionary containing labels and their line numbers
-        Dictionary<string, short> labelDic = new Dictionary<string, short>();
-
-        public void resetLabelDic()
+        private Dictionary<string, short> _labelDic;
+        public Dictionary<string, short> LabelDic
         {
-            labelDic.Clear();
+            get { return _labelDic; }
         }
 
         // Dictionary of branch instructions to be resolved to line numbers
@@ -53,14 +52,24 @@ namespace GeminiCore
         Regex commentRgx = new Regex(commentPattern);
         Regex whitespaceRgx = new Regex(whitespacePattern);
 
+        public IAE()
+        {
+            _labelDic = new Dictionary<string, short>();
+            buildInstructDic();
+        }
+
+        private List<string> readDirtyInstructions(string path)
+        {
+            string[] insArray = File.ReadAllLines(Path.GetFullPath(path));
+            return insArray.ToList();
+        }
+
         /// <summary>
         /// performs all the work required to assemble a file into binary
         /// </summary>
         public void Assemble(string path, string filename)
         {
-            string[] insArray = File.ReadAllLines(Path.GetFullPath(path));
-            dirtyInstructions = insArray.ToList();
-            buildInstructDic();
+            dirtyInstructions = readDirtyInstructions(path);
             firstPass(dirtyInstructions);
             secondPass(dirtyInstructions);
             writeShorts(filename);
@@ -93,107 +102,120 @@ namespace GeminiCore
             reverseInsDic = instructDic.ToDictionary(x => x.Value, x => x.Key);
         }
 
-        //
-        private void firstPass(List<string> dirtIinstructions)
+        #region first pass helpers
+        private string ridWhitespace(string instruct)
+        {
+            instruct = commentRgx.Replace(instruct, "");
+            instruct = whitespaceRgx.Replace(instruct, "");
+            return instruct;
+        }
+        public void errorCheckArg(string arg, int start)
+        {
+            try
+            {
+                Convert.ToInt32(arg.Substring(start, arg.Length - 1));
+            }
+            catch (FormatException exception)
+            {
+                throw new InvalidArgFormattingException();
+            }
+        }
+        public void checkForArgMismath(string[] splitUpCmd, int allowedCommandLength)
+        {
+            if (splitUpCmd.Length != allowedCommandLength)
+            {
+                throw new ArgMismatchException();
+            }
+        }
+        public void checkForInvalidLabelName(string cmd)
+        {
+            if (cmd.IndexOf(':') != cmd.Length - 1)
+            {
+                throw new InvalidLabelNameException();
+            }
+        }
+        public bool cmdNeedsNoArgs(int cmdNum)
+        {
+            return cmdNum == 10 || cmdNum == 15 || cmdNum == 16;
+        }
+        public bool cmdIsBranch(int cmdNum)
+        {
+            return cmdNum == 11 || cmdNum == 12 || cmdNum == 13 || cmdNum == 14;
+        }
+        public void checkArgFormat(string arg)
+        {
+            if (arg[0] == '$')
+            {
+                errorCheckArg(arg, 1);
+            }
+            else if (arg[0] == '#' && arg[1] == '$')
+            {
+                errorCheckArg(arg, 2);
+            }
+        }
+        public void checkAddressFormat(string arg)
+        {
+            if (arg[0] != '$')
+            {
+                if (arg[0] == '#')
+                {
+                    if (arg[1] != '$')
+                    {
+                        throw new InvalidArgFormattingException();
+                    }
+                    return;
+                }
+                throw new InvalidArgFormattingException();
+            }
+            else
+            {
+                checkArgFormat(arg);
+            }
+        }
+        #endregion
+
+        private void firstPass(List<string> dirtyInstructions)
         {
             for (int i = 0; i < dirtyInstructions.Count; i++)
             {
-                string currentInstruct = dirtyInstructions.ElementAt(i);
-                dirtyInstructions[i] = commentRgx.Replace(currentInstruct, "");
-                dirtyInstructions[i] = whitespaceRgx.Replace(dirtyInstructions[i], "");
-                currentInstruct = dirtyInstructions[i];
+                string currentInstruct = ridWhitespace(dirtyInstructions[i]);
                 if (currentInstruct == "")
                 {
                     dirtyInstructions.RemoveAt(i);
                     i--;
                     continue;
                 }
-                //char[] delimiters = { ' ','\t' };
-                string[] split = Regex.Split(currentInstruct.Trim(),@"\s");
+                string[] split = Regex.Split(currentInstruct.Trim(), @"\s");
                 string cmd = split[0];
                 if (cmd.IndexOf(':') != -1)
                 {
-                    if (split.Length != 1)
-                    {
-                        throw new ArgMismatchException();
-                    }
-                    else
-                    {
-                        if (cmd.IndexOf(':') != cmd.Length - 1)
-                        {
-                            throw new InvalidLabelNameException();
-                        }
-                        labelDic.Add(cmd.Substring(0, cmd.Length - 1), (short)(i+1));
-                        dirtyInstructions.RemoveAt(i);
-                        i--;
-                        continue;
-                    }
+                    checkForArgMismath(split, 1);
+                    checkForInvalidLabelName(cmd);
+                    LabelDic.Add(cmd.Substring(0, cmd.Length - 1), (short)(i + 1));
+                    dirtyInstructions.RemoveAt(i);
+                    i--;
+                    continue;
                 }
                 else
                 {
                     try
                     {
                         short cmdNum = instructDic[cmd];
-                        if (cmdNum == 10 || cmdNum == 15 || cmdNum == 16)
+                        if (cmdNeedsNoArgs(cmdNum))
                         {
-                            if (split.Length != 1)
-                            {
-                                throw new ArgMismatchException();
-                            }
+                            checkForArgMismath(split, 1);
                         }
                         else
                         {
-                            if (split.Length != 2)
+                            checkForArgMismath(split, 2);
+
+                            if (cmdIsBranch(cmdNum))
                             {
-                                throw new ArgMismatchException();
+                                branchList.Add(i);
                             }
                             else
                             {
-                                if (cmdNum == 11 || cmdNum == 12 || cmdNum == 13 || cmdNum == 14)
-                                {
-                                    branchList.Add(i);
-                                }
-                                else
-                                {
-                                    string arg = split[1];
-                                    if (arg[0] != '$')
-                                    {
-                                        if(arg[0] == '#')
-                                        {
-                                            if(arg[1] != '$')
-                                            {
-                                                throw new InvalidArgFormattingException();
-                                            }
-                                            continue;
-                                        }
-                                        throw new InvalidArgFormattingException();
-                                    }
-                                    else
-                                    {
-                                        if (arg[0] == '$')
-                                        {
-                                            try
-                                            {
-                                                Convert.ToInt32(arg.Substring(1, arg.Length - 1));
-                                            }
-                                            catch (FormatException exception)
-                                            {
-                                                throw new InvalidArgFormattingException();
-                                            }
-                                        }
-                                        else if (arg[0] == '#' && arg[1] == '$')
-                                        {
-                                            try
-                                            {
-                                                Convert.ToInt32(arg.Substring(2, arg.Length - 1));
-                                            }
-                                            catch (FormatException exception)
-                                            {
-                                                throw new InvalidArgFormattingException();
-                                            }
-                                        }
-                                    }
-                                }
+                                checkAddressFormat(split[1]); 
                             }
                         }
                     }
@@ -212,6 +234,7 @@ namespace GeminiCore
                 string[] pieces = instruction.Trim().Split();
                 short op = instructDic[pieces[0]];
                 short value = 0;
+                short op32 = 0;
                 switch (op)
                 {
                     case 1:
@@ -221,12 +244,17 @@ namespace GeminiCore
                     case 6:
                     case 7:
                     case 8:
+                        op32 = (short)(op << 9);
                         value = immOrMem(pieces[1]);
                         break;
                     case 2:
+                        op32 = (short)(op << 9);
+
                         value = mem(pieces[1]);
                         break;
                     case 9:
+                        op32 = (short)(op << 9);
+
                         value = imm(pieces[1]);
                         break;
                     case 11:
@@ -235,9 +263,11 @@ namespace GeminiCore
                     case 14:
                         try
                         {
-                            value = labelDic[pieces[1]];
-                        } 
-                        catch(KeyNotFoundException exception)
+                            op32 = (short)(op << 9);
+                            op32++;
+                            value = _labelDic[pieces[1]];
+                        }
+                        catch (KeyNotFoundException exception)
                         {
                             throw new InvalidLabelNameException();
                         }
@@ -247,7 +277,6 @@ namespace GeminiCore
 
                 }
 
-                short op32 = (short)((int)(op) << 9);
                 short bits = (short)((int)op32 | (int)value);
                 shorts.Add(bits);
             }
@@ -275,22 +304,22 @@ namespace GeminiCore
         {
             short iFlag = 0;
             short value = 0;
-            string redo = "";
             char[] arg = argument.ToCharArray();
+            int imm;
             if (arg[0] == '#')
             {
+                imm = 2;
                 iFlag = 1;
-                for (int i = 2; i < arg.Length; i++)
-                {
-                    redo += arg[i];
-                }
             }
             else
             {
-                for (int i = 1; i < arg.Length; i++)
-                {
-                    redo += arg[i];
-                }
+                imm = 1;
+            }
+
+            string redo = "";
+            for (; imm < arg.Length; imm++)
+            {
+                redo += arg[imm];
             }
             value = Convert.ToInt16(redo);
             iFlag = (short)((iFlag) << 8);
@@ -332,13 +361,6 @@ namespace GeminiCore
 
         }
 
-        private short lbl(string argument)
-        {
-            // short value = 0;
-            //value =  Convert.ToInt16(argument);
-            return labelDic[argument];
-        }
-
         public string parseComment(string instruct)
         {
             if (instruct.IndexOf("!") == 0)
@@ -347,7 +369,6 @@ namespace GeminiCore
             }
             return instruct.Substring(0, instruct.IndexOf("!") - 1).Trim();
         }
-
 
         public string binaryParse(short bin)
         {

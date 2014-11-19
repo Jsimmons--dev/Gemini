@@ -17,26 +17,24 @@ namespace GeminiCPU
 {
     public partial class Window : Form
     {
+        FetchArgs fetchArgs = new FetchArgs();
+        DecodeArgs decodeArgs = new DecodeArgs();
+        ExecuteArgs executeArgs = new ExecuteArgs();
+        WritebackArgs writebackArgs = new WritebackArgs();
 
         public Window(CPU cpu)
         {
             InitializeComponent();
             this.cpu = cpu;
+            fetchArgs.setup(-1);
+            decodeArgs.setup(-1);
+            executeArgs.setup(-1,-1,-1);
         }
 
         CPU cpu;
+    
 
-        public string memoryL
-        {
-            get
-            {
-                return this.memory.Text;
-            }
-            set
-            {
-                this.memory.Text = value;
-            }
-        }
+
         #region cacheInfo : hit and miss info
         public string ReadHit
         {
@@ -83,17 +81,7 @@ namespace GeminiCPU
             }
         }
         #endregion
-        public string nxtIns
-        {
-            get
-            {
-                return this.nxtInsLabel.Text;
-            }
-            set
-            {
-                this.nxtInsLabel.Text = value;
-            }
-        }
+
         #region registers : register selectors
         public string a
         {
@@ -217,6 +205,64 @@ namespace GeminiCPU
             }
         }
         #endregion
+        #region : cache labels
+        public string fetch
+        {
+            get
+            {
+                return this.fetchLabel.Text;
+            }
+            set
+            {
+                this.fetchLabel.Text = value;
+            }
+        }
+        public string decode
+        {
+            get
+            {
+                return this.decodeLabel.Text;
+            }
+            set
+            {
+                this.decodeLabel.Text = value;
+            }
+        }
+        public string execute
+        {
+            get
+            {
+                return this.executeLabel.Text;
+            }
+            set
+            {
+                this.executeLabel.Text = value;
+            }
+        }
+        public string writeback
+        {
+            get
+            {
+                return this.writebackLabel.Text;
+            }
+            set
+            {
+                this.writebackLabel.Text = value;
+            }
+        }
+        #endregion
+
+        public string nxtIns
+        {
+            get
+            {
+                return this.nxtInsLabel.Text;
+            }
+            set
+            {
+                this.nxtInsLabel.Text = value;
+            }
+        }
         public string insIndexL
         {
             get
@@ -226,6 +272,18 @@ namespace GeminiCPU
             set
             {
                 this.insIndex.Text = value;
+            }
+        }
+
+        public string memoryL
+        {
+            get
+            {
+                return this.memory.Text;
+            }
+            set
+            {
+                this.memory.Text = value;
             }
         }
         public string cacheView
@@ -240,7 +298,6 @@ namespace GeminiCPU
             }
         }
 
-
         public void updateIndex()
         {
             try
@@ -253,7 +310,6 @@ namespace GeminiCPU
                 nxtIns = "----------";
             }
         }
-
         public void updateCacheInfo()
         {
             ReadHit = Convert.ToString(cpu.memory.cacheReadHit);
@@ -261,6 +317,7 @@ namespace GeminiCPU
             WriteHit = Convert.ToString(cpu.memory.cacheWriteHit);
             WriteMiss = Convert.ToString(cpu.memory.cacheWriteMiss);
         }
+
         //also updates memory view
         public void updateCacheView()
         {
@@ -268,28 +325,21 @@ namespace GeminiCPU
             cacheView = Convert.ToString(cpu.memory.cache);
         }
 
+        public void updateRegisters()
+        {
+            acc = "0b " + Convert.ToString(cpu.registerACC, 2);
+            pc = "0b " + Convert.ToString(cpu.registerPC, 2);
+            mar = "0b " + Convert.ToString(cpu.registerMAR, 2);
+            mdr = "0b " + Convert.ToString(cpu.registerMDR, 2);
+            temp = "0b " + Convert.ToString(cpu.registerTEMP, 2);
+            ir = "0b " + Convert.ToString(cpu.registerIR, 2);
+        }
+
         public void setUpFirstIns()
         {
             nxtIns = cpu.engine.binaryParse(cpu.currentIns);
             updateIndex();
-
         }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label17_Click(object sender, EventArgs e)
-        {
-
-        }
-
 
         public void logCacheResults()
         {
@@ -308,65 +358,68 @@ namespace GeminiCPU
                 sw.Write(cpu.memory.cacheReadMiss + ",");
                 sw.Write(cpu.memory.cacheWriteHit + ",");
                 sw.Write(cpu.memory.cacheWriteMiss + ",");
-                sw.Write(Memory.blockSize+","+Memory.cacheSize+","+Memory.frameSetSize+"\n");
+                sw.Write(Memory.blockSize + "," + Memory.cacheSize + "," + Memory.frameSetSize + "\n");
                 sw.Flush();
             }
+        }
+
+
+        private void updateView()
+        {
+            updateRegisters();
+            updateIndex();
+            updateCacheInfo();
+            updateCacheView();
+        }
+
+        private void updatePipeline()
+        {
+
+        }
+
+        public void setupArgs()
+        {
+                writeback = execute;
+                writebackArgs.setup(cpu.registerTEMP, cpu.registerWB);
+                execute = decode;
+                executeArgs.setup(cpu.registerOP,cpu.registerACC,cpu.registerVAL);
+                decode = fetch;
+                decodeArgs.setup(cpu.registerMDR);
+                fetch = cpu.engine.binaryParse(cpu.memory.instructions[fetchArgs.pc]);
+                fetchArgs.setup(cpu.registerPC);
         }
 
         private void nextButton_Click(object sender, EventArgs e)
         {
             try
             {
-                if (cpu.registerPC > cpu.memory.instructions.Count - 1)
+                if (cpu.delaySlots == 0)
                 {
-                    logCacheResults();
-                    MessageBox.Show("End of File Reached");
+                    if (cpu.registerPC < cpu.memory.instructions.Count)
+                    {
+                        cpu.currentIns = cpu.memory.instructions[cpu.registerPC];
+                        nxtIns = cpu.engine.binaryParse(cpu.currentIns);
+                        setupArgs();
+                        updatePipeline();
+                        cpu.stepPipeline(fetchArgs, decodeArgs, executeArgs, writebackArgs);
+                        updateView();
+                    }
+
+                    else
+                    {
+                        MessageBox.Show("End of File Reached");
+                    }
                 }
                 else
                 {
-                    cpu.currentIns = cpu.memory.instructions[cpu.registerPC];
-                    nxtIns = cpu.engine.binaryParse(cpu.currentIns);
-                    cpu.decode(cpu.currentIns);
-                    cpu.registerPC++;
-                    acc = "0b " + Convert.ToString(cpu.registerACC, 2);
-                    pc = "0b " + Convert.ToString(cpu.registerPC, 2);
-                    updateIndex();
-                    updateCacheInfo();
-                    updateCacheView();
+                    cpu.delaySlots--;
                 }
             }
             catch (NullReferenceException exception)
             {
                 MessageBox.Show("No File Loaded");
-                Console.Write(exception.StackTrace);
+                Console.WriteLine(exception.StackTrace);
             }
-        }
-
-        private void label27_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label28_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            cpu.registerPC = 0;
-            if (cpu.memory.instructions != null)
-            {
-                cpu.currentIns = cpu.memory.instructions[cpu.registerPC];
-                nxtIns = cpu.engine.binaryParse(cpu.currentIns);
-                updateIndex();
-            }
-
-        }
-
-        private void label26_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void resetButton_Click(object sender, EventArgs e)
@@ -374,14 +427,12 @@ namespace GeminiCPU
             cpu = new CPU();
             cpu.currentInsNum = 0;
             cpu.registerPC = 0;
-            updateCacheView();
-            updateIndex();
-            updateCacheInfo();
+            updateView();
             if (cpu.memory.instructions != null)
             {
                 cpu.currentIns = cpu.memory.instructions[cpu.currentInsNum];
                 nxtIns = cpu.engine.binaryParse(cpu.currentIns);
-                cpu.engine.resetLabelDic();
+                cpu.engine.LabelDic.Clear();
                 cpu.memory.resetInstructions();
             }
             a = "0b 0";
@@ -396,24 +447,26 @@ namespace GeminiCPU
 
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void runButton_Click(object sender, EventArgs e)
         {
             try
             {
-                while (cpu.registerPC <= cpu.memory.instructions.Count - 1)
+                if (cpu.delaySlots == 0)
                 {
-                    cpu.currentIns = cpu.memory.instructions[cpu.registerPC];
-                    nxtIns = cpu.engine.binaryParse(cpu.currentIns);
-                    cpu.decode(cpu.currentIns);
-                    cpu.registerPC++;
-                    acc = "0b " + Convert.ToString(cpu.registerACC, 2);
-                    pc = "0b " + Convert.ToString(cpu.registerPC, 2);
-                    updateIndex();
-                    updateCacheView();
-                    updateCacheInfo();
+                    while (cpu.registerPC < cpu.memory.instructions.Count)
+                    {
+                        cpu.currentIns = cpu.memory.instructions[cpu.registerPC];
+                        nxtIns = cpu.engine.binaryParse(cpu.currentIns);
+                        setupArgs();
+                        cpu.stepPipeline(fetchArgs, decodeArgs, executeArgs, writebackArgs);
+                        updateView();
+                    }
+                    MessageBox.Show("End of File Reached");
                 }
-                logCacheResults();
-                MessageBox.Show("End of File Reached");
+                else
+                {
+                    cpu.delaySlots--;
+                }
             }
             catch (NullReferenceException exception)
             {
@@ -422,7 +475,7 @@ namespace GeminiCPU
         }
 
         //load file button
-        private void button1_Click(object sender, EventArgs e)
+        private void loadButton_Click(object sender, EventArgs e)
         {
             cpu = new CPU();
             OpenFileDialog ofd = new OpenFileDialog();
@@ -433,9 +486,12 @@ namespace GeminiCPU
                 {
                     cpu.engine.Assemble(cpu.engine.path, "g.out");
                     cpu.fillMem();
+                    for (int i = 1; i <= 3; i++)
+                    {
+                        cpu.pushNoop();
+                    }
                     setUpFirstIns();
-                    updateCacheInfo();
-                    updateCacheView();
+                    updateView();
                 }
                 catch (SyntaxException exception)
                 {
@@ -470,16 +526,6 @@ namespace GeminiCPU
             }
         }
 
-        private void label18_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CacheView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void directButton_CheckedChanged(object sender, EventArgs e)
         {
             Memory.frameSetSize = 1;
@@ -510,9 +556,5 @@ namespace GeminiCPU
             resetButton_Click(null, null);
         }
 
-        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
-        {
-
-        }
     }
 }
