@@ -272,12 +272,16 @@ namespace GeminiCore
                             throw new InvalidLabelNameException();
                         }
                         break;
+                    case 10:
+                    case 15:
+                        op32 = (short)(op << 9);
+                        break;
                     default:
                         break;
 
                 }
 
-                short bits = (short)((int)op32 | (int)value);
+                short bits = (short)(op32 | value);
                 shorts.Add(bits);
             }
         }

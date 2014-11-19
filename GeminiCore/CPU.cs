@@ -53,12 +53,12 @@ namespace GeminiCore
 
         public void pushNoop()
         {
-            memory.instructions.Add(7680);
+            memory.instructions.Add(7936);
         }
 
         public void insertNoop(int i)
         {
-            memory.instructions.Insert(i+3,7680);
+            memory.instructions.Insert(i+3,7936);
         }
 
         public void fetch(FetchArgs args)

@@ -26,9 +26,6 @@ namespace GeminiCPU
         {
             InitializeComponent();
             this.cpu = cpu;
-            fetchArgs.setup(-1);
-            decodeArgs.setup(-1);
-            executeArgs.setup(-1,-1,-1);
         }
 
         CPU cpu;
@@ -379,13 +376,15 @@ namespace GeminiCPU
 
         public void setupArgs()
         {
+
                 writeback = execute;
                 writebackArgs.setup(cpu.registerTEMP, cpu.registerWB);
                 execute = decode;
                 executeArgs.setup(cpu.registerOP,cpu.registerACC,cpu.registerVAL);
                 decode = fetch;
                 decodeArgs.setup(cpu.registerMDR);
-                fetch = cpu.engine.binaryParse(cpu.memory.instructions[fetchArgs.pc]);
+                if(fetchArgs.pc != -1)
+                    fetch = cpu.engine.binaryParse(cpu.memory.instructions[fetchArgs.pc]);
                 fetchArgs.setup(cpu.registerPC);
         }
 
@@ -398,7 +397,7 @@ namespace GeminiCPU
                     if (cpu.registerPC < cpu.memory.instructions.Count)
                     {
                         cpu.currentIns = cpu.memory.instructions[cpu.registerPC];
-                        nxtIns = cpu.engine.binaryParse(cpu.currentIns);
+                        //nxtIns = cpu.engine.binaryParse((short)(cpu.registerPC + 1));
                         setupArgs();
                         updatePipeline();
                         cpu.stepPipeline(fetchArgs, decodeArgs, executeArgs, writebackArgs);
@@ -484,8 +483,12 @@ namespace GeminiCPU
                 cpu.engine.path = ofd.FileName;
                 try
                 {
+                    fetchArgs.setup(0);
+                    decodeArgs.setup(0);
+                    executeArgs.setup(0, 0, 0);
                     cpu.engine.Assemble(cpu.engine.path, "g.out");
                     cpu.fillMem();
+                    cpu.registerPC++;
                     for (int i = 1; i <= 3; i++)
                     {
                         cpu.pushNoop();
