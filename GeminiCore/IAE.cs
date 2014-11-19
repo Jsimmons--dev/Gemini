@@ -275,6 +275,7 @@ namespace GeminiCore
                     case 10:
                     case 15:
                         op32 = (short)(op << 9);
+                        op32++;
                         break;
                     default:
                         break;

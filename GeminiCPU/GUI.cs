@@ -399,8 +399,8 @@ namespace GeminiCPU
                         cpu.currentIns = cpu.memory.instructions[cpu.registerPC];
                         //nxtIns = cpu.engine.binaryParse((short)(cpu.registerPC + 1));
                         setupArgs();
-                        updatePipeline();
                         cpu.stepPipeline(fetchArgs, decodeArgs, executeArgs, writebackArgs);
+                        updatePipeline();
                         updateView();
                     }
 

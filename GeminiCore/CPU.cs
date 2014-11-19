@@ -131,33 +131,38 @@ namespace GeminiCore
                     registerTEMP = (short)~args.acc;
                     break;
                 case 11: //BA
-                    registerPC = (short)(args.value - 2);
+                    registerPC = (short)(args.value);
+                    registerWB = -1;
                     break;
                 case 12: //BE
                     if (registerACC == 0)
                     {
-                        registerPC = (short)(args.value - 2);
+                        registerPC = (short)(args.value);
                         insertNoop(args.value - 1);
                     }
+                    registerWB = -1;
                     break;
                 case 13: //BL
                     if (registerACC < 0)
                     {
-                        registerPC = (short)(args.value - 2);
+                        registerPC = (short)(args.value);
                         insertNoop(args.value - 1);
                     }
+                    registerWB = -1;
                     break;
                 case 14: //BG
                     if (registerACC > 0) 
                     {
-                        registerPC = (short)(args.value - 2);
-                        insertNoop(args.value - 1);
+                        registerPC = (short)(args.value);
+                        insertNoop(args.value);
                     }
+                    registerWB = -1;
                     break;
                 case 15: //NOP
-                    registerTEMP = 0;
+                    registerWB = -1;
                     break;
                 case 16: //HLT
+                    registerWB = -1;
                     registerPC = 0;
                     fakePC = 0;
                     break;
@@ -167,6 +172,7 @@ namespace GeminiCore
 
         public void writeback(WritebackArgs args)
         {
+            if(registerWB != -1)
             registerACC = args.temp;
             if (args.wb == 1)
             {
