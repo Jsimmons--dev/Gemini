@@ -8,8 +8,9 @@ namespace GeminiCore
 {
     public class FetchArgs
     {
-        public short pc;
-    
+        public short pc = -1;
+        public bool locked = false;
+
     public void setup(short pc)
         {
             this.pc = pc;

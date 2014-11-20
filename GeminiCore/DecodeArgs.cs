@@ -9,6 +9,9 @@ namespace GeminiCore
     public class DecodeArgs
     {
         public short mdr;
+        public bool locked = false;
+        public short decodePC = -1;
+
         public void setup(short mdr)
         {
             this.mdr = mdr;

@@ -12,6 +12,8 @@ namespace GeminiCore
         public short acc;
         public short value;
         public short current;
+        public bool locked = false;
+        public short executePC = -1;
 
         public void setup(short op,short acc,short value)
         {

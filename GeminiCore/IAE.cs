@@ -261,10 +261,12 @@ namespace GeminiCore
                     case 12:
                     case 13:
                     case 14:
+                        op32 = (short)(op << 1);
+                        op32++;
+                        op32 = (short)(op << 9);
                         try
                         {
-                            op32 = (short)(op << 9);
-                            op32++;
+                            
                             value = _labelDic[pieces[1]];
                         }
                         catch (KeyNotFoundException exception)

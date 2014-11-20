@@ -58,46 +58,58 @@ namespace GeminiCore
 
         public void insertNoop(int i)
         {
-            memory.instructions.Insert(i+3,7936);
+            memory.instructions.Insert(i,7936);
         }
 
         public void fetch(FetchArgs args)
         {
+            if(args.locked == false)
+            {
             registerMAR = args.pc;
             registerMDR = memory.instructions[registerMAR];
             registerPC++;
+            }
         }
         public void decode(DecodeArgs args)
         {
-            registerIR = args.mdr;
-
-            int negativeOp = 65024;
-            int negativeIFlag = 256;
-            int negativeValue = 255;
-
-            registerOP = 0;
-            registerI = 0;
-            registerVAL = 0;
-
-            registerOP = (short)((registerIR & negativeOp) >> 9);
-            registerI = (short)((registerIR & negativeIFlag) >> 8);
-            if(registerI == 1)
+            if (args.locked == false)
             {
-            registerVAL = (short)(registerIR & negativeValue);
-            }
-            else
-            {
-                registerVAL = memory[(short)(registerIR & negativeValue)];
+                registerIR = args.mdr;
+
+                int negativeOp = 65024;
+                int negativeIFlag = 256;
+                int negativeValue = 255;
+
+                registerOP = 0;
+                registerI = 0;
+                registerVAL = 0;
+
+                registerOP = (short)((registerIR & negativeOp) >> 9);
+                registerI = (short)((registerIR & negativeIFlag) >> 8);
+                if(registerOP == 11 || registerOP == 12 || registerOP == 13 || registerOP ==14)
+                {
+                    registerI = 1;
+                }
+                if (registerI == 1)
+                {
+                    registerVAL = (short)(registerIR & negativeValue);
+                }
+                else
+                {
+                    registerVAL = memory[(short)(registerIR & negativeValue)];
+                }
             }
         }
 
         public void execute(ExecuteArgs args)
         {
+            if(args.locked == false)
+            {
             registerWB = 0;
             switch (args.op)
             {
-                case 1:
-                        registerTEMP = args.value;
+                case 1: //LDA
+                    registerTEMP = args.value;
                     break;
                 case 2: //STA
                     registerTEMP = args.acc; // mem
@@ -105,58 +117,69 @@ namespace GeminiCore
 
                     break;
                 case 3: //ADD
-                        registerTEMP = (short)(args.acc + args.value);
+                    registerWB = 0;
+                    registerTEMP = (short)(args.acc + args.value);
                     break;
                 case 4: //SUB
-                        registerTEMP = (short)(args.acc - args.value); //imm
+                    registerWB = 0;
+                    registerTEMP = (short)(args.acc - args.value); //imm
                     break;
                 case 5: //MUL
-                        registerTEMP = (short)(args.acc * args.value); //imm
-                        delaySlots += 4;
+                    registerWB = 0;
+
+                    registerTEMP = (short)(args.acc * args.value); //imm
+                    delaySlots += 4;
                     break;
                 case 6: //DIV
-                        registerTEMP = (short)(args.acc / args.value); //imm
-                        delaySlots += 4;
+                    registerWB = 0;
+
+                    registerTEMP = (short)(args.acc / args.value); //imm
+                    delaySlots += 4;
                     break;
                 case 7: //AND
-                        registerTEMP = (short)(args.acc & args.value); //imm
+                    registerWB = 0;
+
+                    registerTEMP = (short)(args.acc & args.value); //imm
                     break;
                 case 8: //OR
-                        registerTEMP = (short)(args.acc | args.value); //imm
+                    registerWB = 0;
+
+                    registerTEMP = (short)(args.acc | args.value); //imm
                     break;
                 case 9: //SHL
+                    registerWB = 0;
+
                     registerTEMP = (short)(args.acc << args.value);
                     break;
                 case 10: //NOTA
+                    registerWB = 0;
+
                     registerTEMP = (short)~args.acc;
                     break;
                 case 11: //BA
-                    registerPC = (short)(args.value);
-                    registerWB = -1;
+                    registerTEMP = (short)(args.value);
+                    registerWB = 2;
                     break;
                 case 12: //BE
                     if (registerACC == 0)
                     {
-                        registerPC = (short)(args.value);
-                        insertNoop(args.value - 1);
+                        registerTEMP = (short)(args.value);
                     }
-                    registerWB = -1;
+                    registerWB = 2;
                     break;
                 case 13: //BL
                     if (registerACC < 0)
                     {
-                        registerPC = (short)(args.value);
-                        insertNoop(args.value - 1);
+                        registerTEMP = (short)(args.value);
                     }
-                    registerWB = -1;
+                    registerWB = 2;
                     break;
                 case 14: //BG
-                    if (registerACC > 0) 
+                    if (registerACC > 0)
                     {
-                        registerPC = (short)(args.value);
-                        insertNoop(args.value);
+                        registerTEMP = (short)(args.value);
                     }
-                    registerWB = -1;
+                    registerWB = 2;
                     break;
                 case 15: //NOP
                     registerWB = -1;
@@ -166,17 +189,24 @@ namespace GeminiCore
                     registerPC = 0;
                     fakePC = 0;
                     break;
-
+            }
             }
         }
 
         public void writeback(WritebackArgs args)
         {
-            if(registerWB != -1)
-            registerACC = args.temp;
-            if (args.wb == 1)
+            if (args.locked == false)
             {
-                memory[(short)args.temp] = registerACC;
+                if(args.wb == 2)
+                {
+                    registerPC = args.temp;
+                }
+                if (registerWB != -1)
+                    registerACC = args.temp;
+                if (args.wb == 1)
+                {
+                    memory[(short)args.temp] = registerACC;
+                }
             }
         }
 
@@ -186,7 +216,7 @@ namespace GeminiCore
             Thread f = new Thread(() => fetch(fetchArgs));
             Thread d = new Thread(() => decode(decodeArgs));
             Thread e = new Thread(() => execute(executeArgs));
-            Thread w = new Thread(()=>writeback(writebackArgs));
+            Thread w = new Thread(() => writeback(writebackArgs));
             f.Start();
             d.Start();
             e.Start();

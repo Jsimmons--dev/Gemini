@@ -29,9 +29,142 @@ namespace GeminiCPU
         }
 
         CPU cpu;
-    
 
 
+        #region pipeline labels
+        public string oldfetchL
+        {
+            get
+            {
+                return this.oldfetch.Text;
+            }
+            set
+            {
+                this.oldfetch.Text = value;
+            }
+        }
+        public string olddecodeL
+        {
+            get
+            {
+                return this.olddecode.Text;
+            }
+            set
+            {
+                this.olddecode.Text = value;
+            }
+        }
+        public string oldexecuteL
+        {
+            get
+            {
+                return this.oldexecute.Text;
+            }
+            set
+            {
+                this.oldexecute.Text = value;
+            }
+        }
+        public string oldwriteL
+        {
+            get
+            {
+                return this.oldwrite.Text;
+            }
+            set
+            {
+                this.oldwrite.Text = value;
+            }
+        }
+        public string olderfetchL
+        {
+            get
+            {
+                return this.olderfetch.Text;
+            }
+            set
+            {
+                this.olderfetch.Text = value;
+            }
+        }
+        public string olderdecodeL
+        {
+            get
+            {
+                return this.olderdecode.Text;
+            }
+            set
+            {
+                this.olderdecode.Text = value;
+            }
+        }
+        public string olderexecuteL
+        {
+            get
+            {
+                return this.olderexecute.Text;
+            }
+            set
+            {
+                this.olderexecute.Text = value;
+            }
+        }
+        public string olderwriteL
+        {
+            get
+            {
+                return this.olderwrite.Text;
+            }
+            set
+            {
+                this.olderwrite.Text = value;
+            }
+        }
+        public string oldestfetchL
+        {
+            get
+            {
+                return this.oldestfetch.Text;
+            }
+            set
+            {
+                this.oldestfetch.Text = value;
+            }
+        }
+        public string oldestdecodeL
+        {
+            get
+            {
+                return this.oldestdecode.Text;
+            }
+            set
+            {
+                this.oldestdecode.Text = value;
+            }
+        }
+        public string oldestexecuteL
+        {
+            get
+            {
+                return this.oldestexecute.Text;
+            }
+            set
+            {
+                this.oldestexecute.Text = value;
+            }
+        }
+        public string oldestwriteL
+        {
+            get
+            {
+                return this.oldestwrite.Text;
+            }
+            set
+            {
+                this.oldestwrite.Text = value;
+            }
+        }
+        #endregion
         #region cacheInfo : hit and miss info
         public string ReadHit
         {
@@ -202,7 +335,7 @@ namespace GeminiCPU
             }
         }
         #endregion
-        #region : cache labels
+        #region : pipeline labels
         public string fetch
         {
             get
@@ -299,13 +432,17 @@ namespace GeminiCPU
         {
             try
             {
-                insIndexL = cpu.registerPC + "/" + cpu.memory.instructions.Count;
+                if (cpu.registerPC >= 0 && cpu.registerPC < cpu.memory.instructions.Count)
+                    insIndexL = cpu.registerPC + "/" + (cpu.memory.instructions.Count - 1);
+                else
+                    insIndexL = "-/-";
             }
-            catch (NullReferenceException exception)
+            catch (NullReferenceException)
             {
-                insIndexL = "-/0";
-                nxtIns = "----------";
+                insIndexL = "-/-";
             }
+
+
         }
         public void updateCacheInfo()
         {
@@ -332,10 +469,21 @@ namespace GeminiCPU
             ir = "0b " + Convert.ToString(cpu.registerIR, 2);
         }
 
-        public void setUpFirstIns()
+        public void updateNxtIns()
         {
-            nxtIns = cpu.engine.binaryParse(cpu.currentIns);
-            updateIndex();
+            try
+            {
+                if (cpu.registerPC + 1 <= cpu.memory.instructions.Count)
+                {
+                    nxtIns = cpu.engine.binaryParse(cpu.memory.instructions[cpu.registerPC + 1]);
+                }
+                else
+                    nxtIns = "-----";
+                updateIndex();
+            } catch (Exception exception)
+            {
+                nxtIns = "-----";
+            }
         }
 
         public void logCacheResults()
@@ -365,6 +513,7 @@ namespace GeminiCPU
         {
             updateRegisters();
             updateIndex();
+            updateNxtIns();
             updateCacheInfo();
             updateCacheView();
         }
@@ -376,42 +525,64 @@ namespace GeminiCPU
 
         public void setupArgs()
         {
-
-                writeback = execute;
+            oldestwriteL = olderwriteL;
+            olderwriteL = oldwriteL;
+            oldwriteL = writeback;
+            if (!writebackArgs.locked)
+            {
+                if (cpu.registerPC - 3 >= 0)
+                    writeback = cpu.engine.binaryParse(cpu.memory.instructions[cpu.registerPC - 3]);
+                writebackArgs.writebackPC = executeArgs.executePC;
                 writebackArgs.setup(cpu.registerTEMP, cpu.registerWB);
-                execute = decode;
-                executeArgs.setup(cpu.registerOP,cpu.registerACC,cpu.registerVAL);
-                decode = fetch;
+            }
+
+            oldestexecuteL = olderexecuteL;
+            olderexecuteL = oldexecuteL;
+            oldexecuteL = execute;
+            if (!executeArgs.locked)
+            {
+                if (cpu.registerPC -2 >= 0)
+                    execute = cpu.engine.binaryParse(cpu.memory.instructions[cpu.registerPC - 2]);
+                executeArgs.executePC = decodeArgs.decodePC;
+                executeArgs.setup(cpu.registerOP, cpu.registerACC, cpu.registerVAL);
+            }
+
+            oldestdecodeL = olderdecodeL;
+            olderdecodeL = olddecodeL;
+            olddecodeL = decode;
+            if (!decodeArgs.locked)
+            {
+                if (cpu.registerPC - 1 >= 0)
+                    decode = cpu.engine.binaryParse(cpu.memory.instructions[cpu.registerPC -1]);
+                decodeArgs.decodePC = fetchArgs.pc;
                 decodeArgs.setup(cpu.registerMDR);
-                if(fetchArgs.pc != -1)
-                    fetch = cpu.engine.binaryParse(cpu.memory.instructions[fetchArgs.pc]);
+            }
+
+            oldestfetchL = olderfetchL;
+            olderfetchL = oldfetchL;
+            oldfetchL = fetch;
+            if(!fetchArgs.locked)
+            {
+                fetch = cpu.engine.binaryParse(cpu.memory.instructions[cpu.registerPC]);
                 fetchArgs.setup(cpu.registerPC);
+
+            }
         }
 
         private void nextButton_Click(object sender, EventArgs e)
         {
             try
             {
-                if (cpu.delaySlots == 0)
-                {
-                    if (cpu.registerPC < cpu.memory.instructions.Count)
-                    {
-                        cpu.currentIns = cpu.memory.instructions[cpu.registerPC];
-                        //nxtIns = cpu.engine.binaryParse((short)(cpu.registerPC + 1));
-                        setupArgs();
-                        cpu.stepPipeline(fetchArgs, decodeArgs, executeArgs, writebackArgs);
-                        updatePipeline();
-                        updateView();
-                    }
 
-                    else
-                    {
-                        MessageBox.Show("End of File Reached");
-                    }
+                if (cpu.registerPC < cpu.memory.instructions.Count && cpu.registerPC >= 0)
+                {
+                    setupArgs();
+                    cpu.stepPipeline(fetchArgs, decodeArgs, executeArgs, writebackArgs);
+                    updateView();
                 }
                 else
                 {
-                    cpu.delaySlots--;
+                    MessageBox.Show("End of File Reached");
                 }
             }
             catch (NullReferenceException exception)
@@ -483,17 +654,13 @@ namespace GeminiCPU
                 cpu.engine.path = ofd.FileName;
                 try
                 {
-                    fetchArgs.setup(0);
-                    decodeArgs.setup(0);
-                    executeArgs.setup(0, 0, 0);
                     cpu.engine.Assemble(cpu.engine.path, "g.out");
                     cpu.fillMem();
-                    cpu.registerPC++;
                     for (int i = 1; i <= 3; i++)
                     {
                         cpu.pushNoop();
                     }
-                    setUpFirstIns();
+                    updateNxtIns();
                     updateView();
                 }
                 catch (SyntaxException exception)
@@ -557,6 +724,16 @@ namespace GeminiCPU
         {
             Memory.cacheSize = CacheSizeTrack.Value;
             resetButton_Click(null, null);
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label15_Click(object sender, EventArgs e)
+        {
+
         }
 
     }

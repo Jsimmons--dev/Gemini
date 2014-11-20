@@ -90,11 +90,37 @@
             this.executeLabel = new System.Windows.Forms.Label();
             this.writebackNameLabel = new System.Windows.Forms.Label();
             this.writebackLabel = new System.Windows.Forms.Label();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.oldfetch = new System.Windows.Forms.Label();
+            this.olddecode = new System.Windows.Forms.Label();
+            this.oldexecute = new System.Windows.Forms.Label();
+            this.oldwrite = new System.Windows.Forms.Label();
+            this.olderfetch = new System.Windows.Forms.Label();
+            this.olderdecode = new System.Windows.Forms.Label();
+            this.olderexecute = new System.Windows.Forms.Label();
+            this.olderwrite = new System.Windows.Forms.Label();
+            this.oldestfetch = new System.Windows.Forms.Label();
+            this.oldestdecode = new System.Windows.Forms.Label();
+            this.oldestexecute = new System.Windows.Forms.Label();
+            this.oldestwrite = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
             this.RegisterPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rabbitPictureBox)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CacheSizeTrack)).BeginInit();
+            this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // RegisterPanel
@@ -638,8 +664,9 @@
             this.fetchLabel.AutoSize = true;
             this.fetchLabel.Location = new System.Drawing.Point(88, 478);
             this.fetchLabel.Name = "fetchLabel";
-            this.fetchLabel.Size = new System.Drawing.Size(0, 13);
+            this.fetchLabel.Size = new System.Drawing.Size(22, 13);
             this.fetchLabel.TabIndex = 30;
+            this.fetchLabel.Text = "-----";
             // 
             // decodeNameLabel
             // 
@@ -655,8 +682,9 @@
             this.decodeLabel.AutoSize = true;
             this.decodeLabel.Location = new System.Drawing.Point(88, 491);
             this.decodeLabel.Name = "decodeLabel";
-            this.decodeLabel.Size = new System.Drawing.Size(0, 13);
+            this.decodeLabel.Size = new System.Drawing.Size(22, 13);
             this.decodeLabel.TabIndex = 32;
+            this.decodeLabel.Text = "-----";
             // 
             // executeNameLabel
             // 
@@ -670,10 +698,11 @@
             // executeLabel
             // 
             this.executeLabel.AutoSize = true;
-            this.executeLabel.Location = new System.Drawing.Point(99, 504);
+            this.executeLabel.Location = new System.Drawing.Point(88, 504);
             this.executeLabel.Name = "executeLabel";
-            this.executeLabel.Size = new System.Drawing.Size(0, 13);
+            this.executeLabel.Size = new System.Drawing.Size(22, 13);
             this.executeLabel.TabIndex = 34;
+            this.executeLabel.Text = "-----";
             // 
             // writebackNameLabel
             // 
@@ -687,16 +716,264 @@
             // writebackLabel
             // 
             this.writebackLabel.AutoSize = true;
-            this.writebackLabel.Location = new System.Drawing.Point(93, 517);
+            this.writebackLabel.Location = new System.Drawing.Point(88, 516);
             this.writebackLabel.Name = "writebackLabel";
-            this.writebackLabel.Size = new System.Drawing.Size(0, 13);
+            this.writebackLabel.Size = new System.Drawing.Size(22, 13);
             this.writebackLabel.TabIndex = 36;
+            this.writebackLabel.Text = "-----";
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(8, 3);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(41, 17);
+            this.radioButton1.TabIndex = 37;
+            this.radioButton1.Text = "yes";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Checked = true;
+            this.radioButton2.Location = new System.Drawing.Point(112, 3);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(37, 17);
+            this.radioButton2.TabIndex = 38;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "no";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.radioButton1);
+            this.panel3.Controls.Add(this.radioButton2);
+            this.panel3.Location = new System.Drawing.Point(480, 492);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(200, 25);
+            this.panel3.TabIndex = 39;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.radioButton4);
+            this.panel4.Controls.Add(this.radioButton3);
+            this.panel4.Location = new System.Drawing.Point(480, 560);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(200, 27);
+            this.panel4.TabIndex = 40;
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Location = new System.Drawing.Point(7, 3);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(41, 17);
+            this.radioButton3.TabIndex = 0;
+            this.radioButton3.Text = "yes";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            // 
+            // radioButton4
+            // 
+            this.radioButton4.AutoSize = true;
+            this.radioButton4.CheckAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.radioButton4.Checked = true;
+            this.radioButton4.Location = new System.Drawing.Point(112, 3);
+            this.radioButton4.Name = "radioButton4";
+            this.radioButton4.Size = new System.Drawing.Size(37, 17);
+            this.radioButton4.TabIndex = 1;
+            this.radioButton4.TabStop = true;
+            this.radioButton4.Text = "no";
+            this.radioButton4.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(480, 467);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(55, 13);
+            this.label2.TabIndex = 41;
+            this.label2.Text = "Bypassing";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(480, 541);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(91, 13);
+            this.label3.TabIndex = 42;
+            this.label3.Text = "Branch Prediction";
+            // 
+            // oldfetch
+            // 
+            this.oldfetch.AutoSize = true;
+            this.oldfetch.Location = new System.Drawing.Point(128, 478);
+            this.oldfetch.Name = "oldfetch";
+            this.oldfetch.Size = new System.Drawing.Size(22, 13);
+            this.oldfetch.TabIndex = 43;
+            this.oldfetch.Text = "-----";
+            // 
+            // olddecode
+            // 
+            this.olddecode.AutoSize = true;
+            this.olddecode.Location = new System.Drawing.Point(128, 492);
+            this.olddecode.Name = "olddecode";
+            this.olddecode.Size = new System.Drawing.Size(22, 13);
+            this.olddecode.TabIndex = 44;
+            this.olddecode.Text = "-----";
+            // 
+            // oldexecute
+            // 
+            this.oldexecute.AutoSize = true;
+            this.oldexecute.Location = new System.Drawing.Point(128, 504);
+            this.oldexecute.Name = "oldexecute";
+            this.oldexecute.Size = new System.Drawing.Size(22, 13);
+            this.oldexecute.TabIndex = 45;
+            this.oldexecute.Text = "-----";
+            // 
+            // oldwrite
+            // 
+            this.oldwrite.AutoSize = true;
+            this.oldwrite.Location = new System.Drawing.Point(128, 517);
+            this.oldwrite.Name = "oldwrite";
+            this.oldwrite.Size = new System.Drawing.Size(22, 13);
+            this.oldwrite.TabIndex = 46;
+            this.oldwrite.Text = "-----";
+            // 
+            // olderfetch
+            // 
+            this.olderfetch.AutoSize = true;
+            this.olderfetch.Location = new System.Drawing.Point(167, 477);
+            this.olderfetch.Name = "olderfetch";
+            this.olderfetch.Size = new System.Drawing.Size(22, 13);
+            this.olderfetch.TabIndex = 47;
+            this.olderfetch.Text = "-----";
+            // 
+            // olderdecode
+            // 
+            this.olderdecode.AutoSize = true;
+            this.olderdecode.Location = new System.Drawing.Point(167, 490);
+            this.olderdecode.Name = "olderdecode";
+            this.olderdecode.Size = new System.Drawing.Size(22, 13);
+            this.olderdecode.TabIndex = 48;
+            this.olderdecode.Text = "-----";
+            // 
+            // olderexecute
+            // 
+            this.olderexecute.AutoSize = true;
+            this.olderexecute.Location = new System.Drawing.Point(167, 503);
+            this.olderexecute.Name = "olderexecute";
+            this.olderexecute.Size = new System.Drawing.Size(22, 13);
+            this.olderexecute.TabIndex = 49;
+            this.olderexecute.Text = "-----";
+            // 
+            // olderwrite
+            // 
+            this.olderwrite.AutoSize = true;
+            this.olderwrite.Location = new System.Drawing.Point(167, 516);
+            this.olderwrite.Name = "olderwrite";
+            this.olderwrite.Size = new System.Drawing.Size(22, 13);
+            this.olderwrite.TabIndex = 50;
+            this.olderwrite.Text = "-----";
+            // 
+            // oldestfetch
+            // 
+            this.oldestfetch.AutoSize = true;
+            this.oldestfetch.Location = new System.Drawing.Point(207, 477);
+            this.oldestfetch.Name = "oldestfetch";
+            this.oldestfetch.Size = new System.Drawing.Size(22, 13);
+            this.oldestfetch.TabIndex = 51;
+            this.oldestfetch.Text = "-----";
+            // 
+            // oldestdecode
+            // 
+            this.oldestdecode.AutoSize = true;
+            this.oldestdecode.Location = new System.Drawing.Point(207, 490);
+            this.oldestdecode.Name = "oldestdecode";
+            this.oldestdecode.Size = new System.Drawing.Size(22, 13);
+            this.oldestdecode.TabIndex = 52;
+            this.oldestdecode.Text = "-----";
+            // 
+            // oldestexecute
+            // 
+            this.oldestexecute.AutoSize = true;
+            this.oldestexecute.Location = new System.Drawing.Point(207, 503);
+            this.oldestexecute.Name = "oldestexecute";
+            this.oldestexecute.Size = new System.Drawing.Size(22, 13);
+            this.oldestexecute.TabIndex = 53;
+            this.oldestexecute.Text = "-----";
+            // 
+            // oldestwrite
+            // 
+            this.oldestwrite.AutoSize = true;
+            this.oldestwrite.Location = new System.Drawing.Point(207, 516);
+            this.oldestwrite.Name = "oldestwrite";
+            this.oldestwrite.Size = new System.Drawing.Size(22, 13);
+            this.oldestwrite.TabIndex = 54;
+            this.oldestwrite.Text = "-----";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(64, 448);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(40, 13);
+            this.label15.TabIndex = 55;
+            this.label15.Text = "current";
+            this.label15.Click += new System.EventHandler(this.label15_Click);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(129, 448);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(21, 13);
+            this.label16.TabIndex = 56;
+            this.label16.Text = "old";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(170, 448);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(19, 13);
+            this.label17.TabIndex = 57;
+            this.label17.Text = "o2";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(210, 448);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(19, 13);
+            this.label18.TabIndex = 58;
+            this.label18.Text = "o3";
             // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1401, 638);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.oldestwrite);
+            this.Controls.Add(this.oldestexecute);
+            this.Controls.Add(this.oldestdecode);
+            this.Controls.Add(this.oldestfetch);
+            this.Controls.Add(this.olderwrite);
+            this.Controls.Add(this.olderexecute);
+            this.Controls.Add(this.olderdecode);
+            this.Controls.Add(this.olderfetch);
+            this.Controls.Add(this.oldwrite);
+            this.Controls.Add(this.oldexecute);
+            this.Controls.Add(this.olddecode);
+            this.Controls.Add(this.oldfetch);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.panel4);
+            this.Controls.Add(this.panel3);
             this.Controls.Add(this.writebackLabel);
             this.Controls.Add(this.writebackNameLabel);
             this.Controls.Add(this.executeLabel);
@@ -741,6 +1018,10 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CacheSizeTrack)).EndInit();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -810,6 +1091,30 @@
         private System.Windows.Forms.Label executeLabel;
         private System.Windows.Forms.Label writebackNameLabel;
         private System.Windows.Forms.Label writebackLabel;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.RadioButton radioButton4;
+        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label oldfetch;
+        private System.Windows.Forms.Label olddecode;
+        private System.Windows.Forms.Label oldexecute;
+        private System.Windows.Forms.Label oldwrite;
+        private System.Windows.Forms.Label olderfetch;
+        private System.Windows.Forms.Label olderdecode;
+        private System.Windows.Forms.Label olderexecute;
+        private System.Windows.Forms.Label olderwrite;
+        private System.Windows.Forms.Label oldestfetch;
+        private System.Windows.Forms.Label oldestdecode;
+        private System.Windows.Forms.Label oldestexecute;
+        private System.Windows.Forms.Label oldestwrite;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
 
 
     }

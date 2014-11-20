@@ -10,6 +10,8 @@ namespace GeminiCore
     {
         public short temp;
         public short wb;
+        public bool locked = false;
+        public short writebackPC = -1;
 
         public void setup(short temp,short wb)
         {
